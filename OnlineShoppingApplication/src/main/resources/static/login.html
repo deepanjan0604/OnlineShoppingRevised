@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body ng-controller="loginctrl">
+
+<div class="container">
+
+ 
+<!-- <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+ 
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Sign In</h4>
+        </div>
+        <div class="modal-body">
+
+
+            <form>
+   <input type = "image" id = "close_login" src = "https://cdn3.iconfinder.com/data/icons/sympletts-free-sampler/128/circle-close-128.png">
+                   Username: <input type = "text" id = "login" class="form-control" ng-model="auth.username" placeholder = "Username" name = "uid"><br><br>
+                Password:<input type = "password" id = "password" class="form-control" ng-model="auth.password" name = "upass" placeholder = "**************"><br><br>
+                <input type = "submit" id = "dologin" data-dismiss="modal" value = "Login" ng-click="login()">
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div> -->
+ <form class="col-md-8"> 
+
+                   Username: <input type = "text" id = "login" class="form-control" ng-model="auth.username" placeholder = "Username" name = "uid"><br><br>
+                Password:<input type = "password" id = "password" class="form-control" ng-model="auth.password" name = "upass" placeholder = "**************"><br><br>
+                <input type = "submit" id = "dologin" value = "Login" ng-click="login()">
+
+            </form> 
+        
+          <!--  <p ng-hide="authenticated">login successful</p>  -->
+
+</body>
+</html>

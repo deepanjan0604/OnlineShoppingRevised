@@ -1,0 +1,53 @@
+<body  style="background-color:#lightgrey;" class="panel panel-body" >
+ <div ng-controller="editproductctrl">
+<div class="panel panel-info">
+
+    <div class="panel-heading">Edit Product</div>
+  </div>
+  <br>
+<form  class="col-md-8"  name="form1"   novalidate >
+    Product Name: <input type="text" name="product" class="form-control"
+				ng-model="product.productName"  ng-required="true"/>
+	<span style="color:red" ng-show="form1.product.$dirty && form1.product.$error.required">productname is Required
+  </span>
+  <br /> 
+				
+		Quantity: <input
+				type="number" name="quantity" class="form-control" ng-model="product.quantity" ng-required="true"/><br />
+		<span style="color:red" ng-show="form1.quantity.$dirty && 
+		form1.quantity.$error.required">Quantity is Required
+  </span>
+		Price: <input type="number" name="price" class="form-control"
+				ng-model="product.productPrice"  ng-required="true"/><br />
+				<span style="color:red" ng-show="form1.price.$dirty && 
+		form1.price.$error.required">price is Required
+  </span> 
+				
+			Category: <select class="form-control" ng-model="product.category.categoryName">
+       
+<option  ng-repeat="cat in categories" value="{{cat.categoryName}}">{{cat.categoryName}}
+</option>
+        </select>
+        
+        <br>
+			
+		 Brand: <select class="form-control" ng-model="product.brand.brandName">
+ <option  ng-repeat="brand in brands" value="{{brand.brandName}}">{{brand.brandName}}
+     </option>
+        </select> 
+         <br>
+     
+          <button class="btn btn-primary" ng-click="editproduct()">Edit Product
+          </button>	
+         <!--  <button type="button" class="btn btn-default" >Cancel</button>
+       -->
+  
+</form>
+  
+  <br>
+
+
+</div>
+</div>
+</div>
+</body>

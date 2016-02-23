@@ -1,0 +1,78 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-animate.min.js"></script>
+	<!--<link href="animate.css" rel="stylesheet">-->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
+</head>
+<style>
+img:hover{
+ 
+    box-shadow: 0 0 15px #ccc;
+   /*animation: pulse 0.8s;*/
+  opacity: 0.9;
+  transition:0.4s;
+}
+body{
+font-family: 'Spinnaker', sans-serif;
+}
+a{
+     color: #595959;
+     text-decoration: none;
+   }
+   a:hover{
+    color: black;
+     text-decoration: none;
+   }
+    .button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #504B4B;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 17px;
+  padding: 8px;
+  width: 240px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+.button:hover{
+      background-color:  #cccccc
+;
+ }  
+</style>
+
+<body>
+<div ng-controller="listctrl">
+  
+    <div class="panel panel-default"ng-repeat="image in images">   
+   <div class="media" style="padding:10px" >
+  <div class="media-left">
+   <a href="#view/{{image.id}}">
+      <img class="media-object" src="{{image.imageUrl}}" alt="{{image.name}}">
+    </a>
+  </div>
+  <div class="media-body">
+  <a href="#view/{{image.id}}">  <h3 class="media-heading">{{image.name}}</h3></a>
+ <h4>  Rs.{{image.price}}</h4>
+   
+   <a ng-show="user" style="float:right" href="#" class="button" role="button">Add to Cart</a>
+    <a ng-show="admin" style="float:right" href="#" class="button" role="button">Edit</a>
+  </div>
+</div>      
+    </div>    
+    
+</div>
+</body>
+</html>
+
+
+
+
+<script>
+  
+ 
+</script>

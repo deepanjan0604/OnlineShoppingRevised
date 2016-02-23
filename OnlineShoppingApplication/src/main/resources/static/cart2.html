@@ -1,0 +1,223 @@
+<html>
+  <style>
+    body{
+font-family: 'Spinnaker', sans-serif;
+
+    }
+   th, tr, td{
+     padding:12px;
+   } 
+   a{
+     color: #595959;
+     text-decoration: none;
+   }
+   a:hover{
+    color: black;
+     text-decoration: none;
+   }
+   .button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #504B4B;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 17px;
+  padding: 8px;
+  width: 280px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.savebutton{
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #504B4B;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 16px;
+  padding: 7px;
+  width: 80px;
+ margin: 5px;
+  transition-duration: 0.2s;
+}
+.savebutton:hover{
+   background-color: #737373;
+   
+}
+#ordersummary{
+    background-color: #e6e6e6;
+      font-size: 16px;
+      margin-bottom: 30px;
+}
+.btn{
+  padding:8px;
+  font-size: 16px;
+  margin: 5px;
+  width : 80px;
+ margin-bottom: 8px;
+}
+ .button:hover{
+      background-color:  #595959
+;
+ }  
+    </style>
+    
+<body ng-controller="cartctrl">
+  <div class="row">
+<div >
+  <h3 style="float:left">YOUR CART</h3>
+  <h4 style="float:right"><a  href="#e1">Continue Shopping></a></h4>
+</div>
+<table  class="table" class="col-md-12">
+ <tr>
+  <th class="col-md-6">Products</th>
+  <!--<th class="col-md-4" style="text-align: center">Your Cart</th>-->
+  <th style="text-align:right" class="col-md-6">Price(in Rs.)</th>
+ </tr>
+ 
+ 
+  <tr ng-repeat="image in images">
+    <td><div class="col-md-4"><img ng-src="{{image.imageUrl}}"></div>
+    <div class="col-md-offset-5">
+    <a href="#"><b>{{image.name}}</b></a><br>
+    <p ng-hide="show"> Quantity: {{image.quantity}}<br>
+     <a href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a></p>
+<br>
+<div ng-show="show">
+  <!--<select class="btn btn-default dropdown-toggle" ng-model="image.quantity">
+    <option>1</option>
+     <option>2</option>
+      <option>3</option>
+    </select><br>-->
+    <input type="number" ng-model="image.quantity" min="1" value="image.quantity" />
+    <br>
+    <button class="savebutton" ng-click="show=!show">Save</button>
+    <button class="btn btn-default" ng-click="show=!show">Cancel</button>
+</div>
+<a href=""><span class="glyphicon glyphicon-trash"></span> Remove Item</a>
+</div>
+   </td>
+    <td style="text-align:right">Rs.{{image.price}}</td>
+    
+  </tr>
+  
+</table>
+ 
+  </div>
+<!--<div class="col-md-offset-8">
+  <p>sdfsd</p>-->
+  </div>
+
+<h2> Ship To </h2>
+<table class="table">
+<tr>
+  <th ></th>
+  <th class="col-md-4">Address</th>
+					<th class="col-md-2" >Mobile</th>
+					<th class="col-md-2">City</th>
+					<th class="col-md-2">State</th>
+					<th class="col-md-2">Pin Code</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="sa in shippingAddresses">
+          <td><input type="checkbox" ng-model="shippingAddress.id" />
+					<td>{{sa.address1}},{{sa.address2}}</td>
+					<td>{{sa.phone}}</td>
+          <td>{{sa.city}}</td>
+					<td>{{sa.state}}</td>
+					<td>{{sa.pin}}</td>
+        <!--<td>{{shippingAddress.id}}</td>-->
+				
+				
+			</tbody>
+		</table>
+    
+    <button  ng-click="showForm=true" data-toggle="modal" data-target="#myModal" class="button" style="vertical-align:middle"><span>Ship to a different Address </span></button>
+    <br><br>
+    <form ng-show="showForm">
+  
+		<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add a new Shipping Address</h4>
+        </div>
+        <div class="modal-body">
+           Address Line1: <input type="text" class="form-control"
+				ng-model="shippingAddress.address1"/><br /> 
+				
+		Address Line2: <input
+				type="text"  class="form-control" ng-model="shippingAddress.address2"/><br />
+				Phone: <input type="text" class="form-control"
+				ng-model="shippingAddress.phone"/><br>
+		City: <input type="text" class="form-control"
+				ng-model="shippingAddress.city"/><br /> 
+				
+			State: <input
+				type="text" class="form-control" ng-model="shippingAddress.state"/><br />
+			PinCode: <input type="text"  class="form-control"
+				ng-model="shippingAddress.pin"/><br /> 
+		
+        </div>
+        <div class="modal-footer">
+          <button class="button" data-dismiss="modal" ng-click="addShipping()">Add Shipping Address</button>	
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</form>	
+</div>
+<br>
+<div id="ordersummary" class="col-md-5 col-md-offset-3">
+<h2>Order Summary</h2>
+
+Total cost :<br>
+Taxes(VAT) :
+<hr>
+<h3>Total : </h3>
+ <br>
+<button class="button" style="margin:auto;
+  display:block;" class="btn btn-primary" ng-click="">Place the Order</button>	
+  <br> 
+
+</div>
+  <span style="display:block; height:200px;"></span>
+
+
+</body>
+</html>

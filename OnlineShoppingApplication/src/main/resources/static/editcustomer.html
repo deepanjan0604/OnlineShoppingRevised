@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html> 
+<head>
+  <style>
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #504B4B;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 17px;
+    padding: 8px;
+    width: 280px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  .button span:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+  .button:hover span {
+    padding-right: 25px;
+  }
+
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  </style>
+</head> 
+<body >
+
+  <div ng-controller="editcustomerctrl">
+
+    
+
+    <div align="center">
+      <h1>{{title}}</h1>
+      <div>
+        <div class="col-sm-12 form-group">
+          <div class="row">
+            <div>
+              <form class="form-horizontal" id="form1" name="form1"  novalidate>
+                <br>
+                <div class="form-group">
+                  <label for="firstname" class="col-sm-4 control-label">First Name</label>
+                  <div class="col-md-4">
+                    <input type="text" name="firstname" ng-model="edit.firstName" class="form-control" ng-required="true">
+                    <span style="color:red" ng-show="form1.firstname.$dirty && form1.firstname.$error.required">First name is Required
+                    </span>
+                    <span style="color:red" ng-show="form1.lastname.$dirty && form1.lastname.$error.lastname">Not a valid name!</span>  
+                  </div>
+                </div>
+             <!--   First Name: <input type="text" name="firstname" class="form-control"
+				ng-model="edit.firstName"  ng-required="true"/>
+	<span style="color:red" ng-show="form1.firstname.$dirty && form1.firstname.$error.required">firstname is Required
+  </span> -->
+  <br /> 
+                <br>
+
+                <div class="form-group">
+                  <label for="lastname" class="col-sm-4 control-label">Last Name</label>
+                  <div class="col-md-4">
+                    <input type="text" name="lastname" ng-model="edit.lastName" class="form-control" ng-required="true" >
+                    <span style="color:red" ng-show="form1.lastname.$dirty && form1.lastname.$error.required">Last name is Required
+                    </div>
+                  </div>
+                  <br>
+                  
+                  <div class="form-group">
+                    <label for="inputEmail" class="col-sm-4 control-label">E-mail</label>
+                    <div class="col-md-4"> 
+                      <input type="email" class="form-control" id="email" name="email" ng-model="edit.emailId" ng-required="true">
+                      <span style="color:red" ng-show="form1.email.$dirty && form1.email.$error.required"> EmailId is Required!</span>
+                      <span style="color:red" ng-show="form1.email.$dirty && form1.email.$error.email">Not valid email!</span>  
+                    </div>
+                  </div>
+                  <br />
+                  
+                  <div class="form-group">
+                    <label for="UserName" class="col-sm-4 control-label" ng-required="true">User Name</label>
+                    <div class="col-md-4">
+                      <input type="text"  name="username"  ng-model="edit.userName" class="form-control" id="username" >
+                      <span style="color:red"ng-show="form1.username.$dirty && form1.username.$error.required">User name is Required
+                      </span>
+                    </div> 
+                  </div>
+                  <br>
+
+
+
+                  <input  class="btn btn-primary"
+                  value="save"  ng-click="savedetails()"/> 
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <h2> Ship To </h2>
+        <table class="table">
+          <tr>
+            <th ></th>
+            <th class="col-md-4">Address</th>
+            <th class="col-md-2" >Mobile</th>
+            <th class="col-md-2">City</th>
+            <th class="col-md-2">State</th>
+            <th class="col-md-2">Pin Code</th>
+            <th class="col-md-2">Edit</th>
+
+          </tr>
+        </thead>
+      <tbody>
+        <tr ng-repeat="sa in shippingaddresses">
+          <td><input type="checkbox" ng-model="shippingAddress.id" />
+          <td>{{sa.address1}},{{sa.address2}}</td>
+          <td>{{sa.phone}}</td>
+          <td>{{sa.city}}</td>
+          <td>{{sa.state}}</td>
+          <td>{{sa.pin}}</td>
+          <td><a href="#editshipping/{{sa.shippingId}}" >Edit </a> </td>
+      </tr>
+        
+        
+        </tbody>
+      </table>
+      
+      <button   data-toggle="modal" data-target="#myModal1" class="button" style="vertical-align:middle"><span>Add new Shipping Address </span></button>
+      <br><br>
+      
+        
+        <div class="modal fade" id="myModal1" role="dialog">
+          <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Add a new Shipping Address</h4>
+              </div>
+              <div class="modal-body">
+              <form  name="form1"  novalidate>
+               Address Line1: <input type="text" class="form-control" name="addressline1"
+               ng-model="shippingAddress.address1" ng-required="true"/>
+               <span style="color:red" ng-show="form1.addressline1.$dirty && 
+               form1.addressline1.$error.required"> Address Line1  is Required!</span><br /> 
+               
+               Address Line2: <input
+               type="text" name="addressline2" class="form-control" ng-model="shippingAddress.address2" ng-required="true"/><br />
+               <span style="color:red" ng-show="form1.addressline2.$dirty && 
+               form1.addressline2.$error.required"> Address Line 2  is Required!</span><br /> 
+               
+               Phone: <input type="text" class="form-control" name="phone"
+               ng-model="shippingAddress.phone" 
+               ng-pattern="/^[0-9]{1,7}$/"  ng-required="true" /><br>
+               
+               <span style="color:red "
+               ng-show="form1.phone.$dirty && form1.phone.$error.required ">Phone number is Required
+             </span>
+             <span style="color:red" 
+             ng-show=" form1.phone.$error.pattern">Not a valid phone number! ONLY NUMBERS ALLOWED</span> 
+             
+             
+             
+             City: <input type="text" name="city"class="form-control"
+             ng-model="shippingAddress.city" ng-required="true" />
+             <span style="color:red" ng-show="form1.city.$dirty && 
+             form1.city.$error.required"> city is Required!
+           </span><br /> <br /> 
+           
+           
+           
+           State:<select class="form-control" ng-model="shippingAddress.state">
+           <!--    <option><-----Select-----></option> -->
+           <option  ng-repeat="cat in statevat" value="{{cat.state}}">{{cat.state}}
+           </option>
+         </select> 
+         <br><br>
+         
+         
+      <!-- State: <input name="state"
+        type="text" class="form-control" ng-model="shippingAddress.state" ng-required="true" /><br />
+      <span style="color:red" ng-show="form1.state.$dirty && 
+        form1.state.$error.required"> State is Required!
+      </span><br /> <br /> -->
+      
+      
+      
+      PinCode: <input type="text" name="pincode" ng-pattern="/^[0-9]{1,7}$/" class="form-control"
+      ng-model="shippingAddress.pin"/><br /> 
+      
+      <span style="color:red "
+      ng-show="form1.pincode.$dirty && form1.pincode.$error.required ">Phone number is Required
+    </span>
+    <span style="color:red" 
+    ng-show=" form1.pincode.$error.pattern">Not a valid phone number! ONLY NUMBERS ALLOWED</span> 
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="button" data-dismiss="modal" ng-click="addShipping()">Add Shipping Address</button>  
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+</div>
+</body>
+
+</html> 
