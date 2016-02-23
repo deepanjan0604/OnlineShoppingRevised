@@ -142,13 +142,25 @@ public List<Brand> getBrands() {
 } 
 
 
-
 @RequestMapping("/cart")
 public List<Cart> getCart() {
-  return (List<Cart>) cartRepository.findAll();
-} 
 
+	return (List<Cart>) cartRepository.findAll();
+	/*Customer customer = getCustomer();
+	List<Cart> cart = customer.getCart();
+	return (List<Cart>) cart;*/
 
+	//Customer customer = getCustomer();
+	
+	//return (List<Cart>) customer.getCart();
+
+}	
+
+@RequestMapping("/cart/{cartId}")
+public Cart  getCart (@PathVariable("cartId") int cartId){
+
+return  cartRepository.findOne(cartId);
+}
 
 @RequestMapping("/cartitems")
 public List<CartItem> getCartItem() {

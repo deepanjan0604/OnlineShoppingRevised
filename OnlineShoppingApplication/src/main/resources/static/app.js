@@ -725,7 +725,7 @@ debugger;
                            	     
 		$http({
 			method : 'GET',
-			url : '/products',	
+			url : '/',	
 		}).then(function(response) {
 		
 			$rootScope.products = angular.copy(response.data);		 
@@ -749,8 +749,11 @@ debugger;
 	});
                                                              
  }])
-app.controller('cartctrl', ['$scope', function($scope) { 
-   $scope.images=[
+app.controller('cartctrl', 
+	[ '$scope','$route','$routeParams', '$rootScope','$http',
+	     function($scope,$route,$routeParams,$rootScope, $http)
+	     {
+  /* $scope.images=[
   {
     "id": "1",
     "imageUrl": "1.jpg",
@@ -765,7 +768,7 @@ app.controller('cartctrl', ['$scope', function($scope) {
     "name": "Ara2",
      "quantity":2
    }
-   ]
+   ]*/
    
    /*$scope.shippingAddresses=[
      {
@@ -790,6 +793,23 @@ app.controller('cartctrl', ['$scope', function($scope) {
   /*  $scope.addShipping=function(){
             $scope.shippingAddresses.push($scope.shippingAddress);
              $scope.shippingAddress='';*/
+	
+	
+	
+
+	  $http({
+			
+		   method : 'GET',
+	                           			
+	                           			
+	       url : '/cart',
+	                           			
+	        }).then(function(response) {
+	                           			$scope.cart = angular.copy(response.data);
+	                           			
+	                           			debugger;
+	                           		});
+	  
     
  }])
  
