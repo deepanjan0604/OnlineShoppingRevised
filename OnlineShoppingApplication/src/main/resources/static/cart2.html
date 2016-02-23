@@ -103,36 +103,39 @@ font-family: 'Spinnaker', sans-serif;
  </tr>
  
  
-  <tr ng-repeat="image in images">
+  <tr ng-repeat="cart in cart">
     <td><div class="col-md-4"><img ng-src="{{image.imageUrl}}"></div>
     <div class="col-md-offset-5">
+    
     <a href="#"><b>{{image.name}}</b></a><br>
-    <p ng-hide="show"> Quantity: {{image.quantity}}<br>
+    <a   ng-repeat="cartitem in cart.cartitem" ><b> Product Name: </b> {{cartitem.product.productName}}</a><br>
+    
+    
+    <p ng-hide="show" ng-repeat="cartitem in cart.cartitem"> <b>Quantity: </b>{{cartitem.quantity}}<br>
+    
+    
      <a href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a></p>
 <br>
 <div ng-show="show">
-  <!--<select class="btn btn-default dropdown-toggle" ng-model="image.quantity">
-    <option>1</option>
-     <option>2</option>
-      <option>3</option>
-    </select><br>-->
+
     <input type="number" ng-model="image.quantity" min="1" value="image.quantity" />
     <br>
     <button class="savebutton" ng-click="show=!show">Save</button>
     <button class="btn btn-default" ng-click="show=!show">Cancel</button>
-</div>
-<a href=""><span class="glyphicon glyphicon-trash"></span> Remove Item</a>
-</div>
+
    </td>
-    <td style="text-align:right">Rs.{{image.price}}</td>
+     <td ng-repeat="cartitem in cart.cartitem" 
+    style="text-align:right">Rs.{{cartitem.product.productPrice}}</td>
+    
+    
+    
     
   </tr>
   
 </table>
  
   </div>
-<!--<div class="col-md-offset-8">
-  <p>sdfsd</p>-->
+
   </div>
 
 <h2> Ship To </h2>
