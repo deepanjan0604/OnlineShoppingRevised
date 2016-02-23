@@ -5,6 +5,30 @@
 	<!--<link href="animate.css" rel="stylesheet">-->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
+<style>
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+</style>
 </head>
 <style>
 img:hover{
@@ -85,9 +109,16 @@ a{
 				</tr> 
 			</tbody>
 		</table>
-		
-		
-	
+<!-- 		<div class="rightalign">
+		<ul class="pagination">
+<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
+  <li ng-repeat="n in [] | range: pagination.numPages" ng-class="{active: n == pagination.page}">
+  <a href="" ng-click="pagination.toPageId(n)">{{n + 1}}</a>
+  </li>
+  <li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li> 
+
+</ul>
+	</div> -->
   <!-- <div  class="col-sm-6 col-md-4" ng-repeat="image in images">
   <a href="#view/{{image.id}}">   <div style="height:350px" class="thumbnail">
       <img  ng-src="{{image.imageUrl}}" alt="{{image.name}}">

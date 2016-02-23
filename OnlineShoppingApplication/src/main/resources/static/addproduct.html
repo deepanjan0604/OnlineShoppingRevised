@@ -28,13 +28,22 @@
 <option  ng-repeat="cat in categories" value="{{cat.categoryName}}">{{cat.categoryName}}
 </option>
         </select>
-        
+        <p>
+        <a href="#category">
+          <span class="glyphicon glyphicon-plus"></span>Add Category
+        </a>
+      </p>  
         <br>
 			
 		 Brand: <select class="form-control" ng-model="product.brand.brandName">
  <option  ng-repeat="brand in brands" value="{{brand.brandName}}">{{brand.brandName}}
      </option>
         </select> 
+         <p>
+        <a href="#brand">
+          <span class="glyphicon glyphicon-plus"></span>Add Brand
+        </a>
+      </p>  
          <br>
          
          

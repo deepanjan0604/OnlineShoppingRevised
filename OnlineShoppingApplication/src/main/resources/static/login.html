@@ -4,9 +4,123 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link href="css/style.css" rel='stylesheet' type='text/css' /> -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,300,600,700' rel='stylesheet' type='text/css'>
+<!-- <style>
+.login-form {
+	background: url(../images/bgf.png) no-repeat 100% 0%;
+	background-size: 100%;
+	width:60%;
+	margin:2% auto 4% auto;
+ 	
+}
+.login-form h1{
+	text-align:left;
+	color: #fff;
+	font-size:1.8em;
+	font-weight:500;
+	font-family: 'Open Sans', sans-serif;
+	position:absolute;
+	top:7%;
+	left:11%;
+	margin:34px 0;
+} 
+.login-form h2 a{
+	text-align:right;
+	color: #fff;
+	font-size:1.15em;
+	font-weight:500;
+	font-family: 'Open Sans', sans-serif;
+	position:absolute;
+	top:9.5%;
+	right:11%;
+	margin:34px 0;
+} 
+form {
+	padding:32% 3em;
+}
+form li{
+	border:1px solid #FFC600;
+	list-style:none;
+	margin-bottom:16px;
+	width:100%;
+	background: #FFC600;
+
+}
+
+.icon{
+	background:url(../images/icons.png)  no-repeat 0px 0px;
+	height:40px;
+	width:40px;
+	display: block;
+	float:left;
+	margin:5px -11px 0px 0px
+}
+
+.user{
+	background: url(../images/icons.png) no-repeat 7px 1px;
+	
+}
+.lock{
+	background: url(../images/icons.png) no-repeat -31px 2px;
+}
+.arrow{
+	background: url(../images/icons.png) no-repeat -62px 11px;
+	position: absolute;
+}
+input[type="text"], input[type="password"] {
+	font-family: 'Open Sans', sans-serif;
+	width:60%;
+	padding: 0.5em 2em 0.5em 1em;
+	color: #fff;
+	font-size:20px;
+	outline: none;
+	background: none;
+	border:none;
+}
+
+input[type="submit"]{
+	float:left;
+	font-size:18px;
+	display: inline-block;
+	font-weight:600;
+	color: #615F5F;
+	transition: 0.1s all;
+	-webkit-transition: 0.1s all;
+	-moz-transition: 0.1s all;
+	-o-transition: 0.1s all;
+	cursor: pointer;
+	outline: none;
+	padding:15px 10px;
+	margin-top:3px;
+	font-family: 'Open Sans', sans-serif;
+	background: #222;
+	width:45%;
+	border:1px solid #222;
+}
+input[type="submit"]:hover{
+	background: #FFC600;
+	border:1px solid #FFC600;
+}
+.forgot{
+	margin:30px 7px;
+}
+.forgot h3 a{
+	color:#fff;
+	font-size:15px;
+	font-family: 'Open Sans', sans-serif;	
+	float:right;
+	font-weight:600;
+	margin-top:19px;
+}
+.forgot h3 a:hover{
+	color:#FFC600;
+}
+</style> -->
+
 </head>
 <body ng-controller="loginctrl">
 
@@ -27,8 +141,11 @@
 
             <form>
    <input type = "image" id = "close_login" src = "https://cdn3.iconfinder.com/data/icons/sympletts-free-sampler/128/circle-close-128.png">
+       <p><a href="#"><span class="glyphicon glyphicon-user"></span> </a></p>           
+        
                    Username: <input type = "text" id = "login" class="form-control" ng-model="auth.username" placeholder = "Username" name = "uid"><br><br>
-                Password:<input type = "password" id = "password" class="form-control" ng-model="auth.password" name = "upass" placeholder = "**************"><br><br>
+               <p><a href="#"><span class="glyphicon glyphicon-user"></span> </a></p>       
+               Password:<input type = "password" id = "password" class="form-control" ng-model="auth.password" name = "upass" placeholder = "**************"><br><br>
                 <input type = "submit" id = "dologin" data-dismiss="modal" value = "Login" ng-click="login()">
             </form>
         </div>
@@ -41,15 +158,39 @@
   </div>
   
 </div> -->
- <form class="col-md-8"> 
-
+  <form class="col-md-8"> 
+  <div class="container"></div>
+ <a href=""><span class="glyphicon glyphicon-user"></span> </a>
                    Username: <input type = "text" id = "login" class="form-control" ng-model="auth.username" placeholder = "Username" name = "uid"><br><br>
+                 <a href=""><span class="glyphicon glyphicon-lock"></span> </a>
                 Password:<input type = "password" id = "password" class="form-control" ng-model="auth.password" name = "upass" placeholder = "**************"><br><br>
                 <input type = "submit" id = "dologin" value = "Login" ng-click="login()">
 
             </form> 
+         </div>
         
-          <!--  <p ng-hide="authenticated">login successful</p>  -->
-
+        
+      <!-----start-main---->
+<!-- 				<div class="login-form">
+						
+						
+				<form>
+				
+				<h1>Sign In</h1> 
+					<li>
+						<input type="text" class="text" value="User Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User Name';}" ><a href="" class=" icon user"></a>
+					</li>
+					<li>
+						<input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}"><a href="" class=" icon lock"></a>
+					</li>
+					
+					 <div class ="forgot">
+						<h3><a href="#">Forgot Password?</a></h3>
+						<input type="submit" onclick="myFunction()" value="Sign In" > <a href="#" class=" icon arrow"></a>                                                                                                                                                                                                                                 </h4>
+					</div>
+				</form>
+			</div>
+           <p ng-hide="authenticated">login successful</p> 
+</div>  -->
 </body>
 </html>
