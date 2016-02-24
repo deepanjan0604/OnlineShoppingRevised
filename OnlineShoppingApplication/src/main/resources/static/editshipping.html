@@ -1,0 +1,36 @@
+ 
+ <body ng-controller="editshippingctrl" >
+ 
+ <form>
+ Address Line1: <input type="text" class="form-control"
+				ng-model="edit1.address1" ng-required="true"/><br /> 
+				
+		Address Line2: <input
+				type="text"  class="form-control" ng-model="edit1.address2" ng-required="true"/><br />
+				
+				Phone: <input type="text" class="form-control"
+				ng-model="edit1.phone" ng-required="true" /><br>
+				
+		City: <input type="text" class="form-control"
+				ng-model="edit1.city" ng-required="true" /><br /> 
+				
+			<!-- State: <input
+				type="text" class="form-control" ng-model="edit1.state" ng-required="true" /><br /> -->
+				
+				
+				 State:<select class="form-control" ng-model="edit1.state">
+           <!--    <option><-----Select-----></option> -->
+           <option  ng-repeat="cat in statevat" value="{{cat.state}}">{{cat.state}}
+           </option>
+         </select> <br>
+         
+			PinCode: <input type="text"  class="form-control"
+				ng-model="edit1.pin"/><br /> 
+		
+        
+        
+          <button class="button" data-dismiss="modal" ng-click="editShipping()">Save</button>	
+          <a type="button" href="#editcustomer" class="btn btn-default" >Cancel</a>
+       
+ </form>
+	  </body>
