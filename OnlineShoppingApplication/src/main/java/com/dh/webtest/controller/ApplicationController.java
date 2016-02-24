@@ -142,10 +142,11 @@ public List<Brand> getBrands() {
 } 
 
 
-
 @RequestMapping("/cart")
-public List<Cart> getCart() {
-  return (List<Cart>) cartRepository.findAll();
+public Cart getCart() {
+	Customer customer = getCustomer();
+	int cartid = customer.getCart().getCartId();
+  return cartRepository.findOne(cartid);
 } 
 
 
@@ -387,8 +388,49 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
     return returnParams;
   }
   
-  
-}
+ /* @RequestMapping("/addtocart")
+  public HashMap<String, Object> addtoCart(@RequestBody CartItem cartitem) {
+  	HashMap<String, Object> returnParams = new HashMap<String, Object>();
+  try
+  {
+  	Customer customer= getCustomer();
+  	Cart cartcheck = customer.getCart();
+  	if(cartcheck != null)
+  	{
+  int cartid = customer.getCart().getCartId();
+  Cart cart = cartRepository.findOne(cartid);
+   	cartitem.setCart(cart);
+   	
+  	}
+  	List<CartItem> cartitems = cart.getCartitem();
+  	Iterator<CartItem> it = cartitems.iterator();
+  	while(it.hasNext()){
+  		CartItem cartitem= (CartItem)it.next();
+  		Product product = cartitem.getProduct();
+  		product.setCartitem(cartitem);
+  		cartitem.setCart(cart);
+  	}
+  		else
+  		{
+  			Cart cart1 = customer.getCart();
+  			cartitem.setCart(cart1);
+  }
+  	
+  	
+  //	cart.setCustomer(getCustomer());
+  	cartItemRepository.save(cartitem);
+  	returnParams.put("status", true);
+  } catch (Exception e) {
+  	e.printStackTrace();
+  		returnParams.put("status", false);
+  		returnParams.put("msg", "Cart Addition Failed!");
+  	
+  	
+  }
+  return returnParams;
+  }
+  }
+*/
 /*  
   @RequestMapping(value = "/upload")
   public HashMap<String, Object> handleFormUpload(@RequestParam("file") MultipartFile file) throws IOException{
@@ -435,6 +477,113 @@ return returnParams;
   }*/
   
 
+  @RequestMapping("/cartcheck")
+  public HashMap<String, String> cartCheck() {
 
+  HashMap<String, String> returnParams = new HashMap<String, String>();
+
+  Customer customer= getCustomer();
+	Cart cartcheck = customer.getCart();
+	if(cartcheck != null)
+		returnParams.put("status", "true");
+  else
+    returnParams.put("status", "false");  
+  return returnParams;
+  }
+  
+  
+  
+  @RequestMapping("/addcartitem")
+  public HashMap<String, Object> addCartitem(@RequestBody CartItem cartitem) {
+  	HashMap<String, Object> returnParams = new HashMap<String, Object>();
+  try
+  {
+  	Customer customer= getCustomer();
+  	Cart cartcheck = customer.getCart();
+  	if(cartcheck != null)
+  	{
+  int cartid = customer.getCart().getCartId();
+  Cart cart = cartRepository.findOne(cartid);
+   	cartitem.setCart(cart);
+   	
+  	}
+  	
+  		/*else
+  		{
+  			Cart cart1 = customer.getCart();
+  			cartitem.setCart(cart1);
+  }*/
+  	
+  	
+  //	cart.setCustomer(getCustomer());
+  	cartItemRepository.save(cartitem);
+  	returnParams.put("status", true);
+  } catch (Exception e) {
+  	e.printStackTrace();
+  		returnParams.put("status", false);
+  		returnParams.put("msg", "Cart Addition Failed!");
+  	
+  	
+  }
+  return returnParams;
+  }
+  
+  
+  
+  @RequestMapping("/addcart")
+  public HashMap<String, Object> addCart(@RequestBody Cart cart) {
+  	HashMap<String, Object> returnParams = new HashMap<String, Object>();
+ try
+  {
+  	
+   	
+  	
+  	List<CartItem> cartitems = cart.getCartitem();
+  	Iterator<CartItem> it = cartitems.iterator();
+  	while(it.hasNext()){
+  		CartItem cartitem= (CartItem)it.next();
+  		/*Product product = cartitem.getProduct();
+  		product.setCartitem(cartitem);*/
+  		cartitem.setCart(cart);
+  	}
+  		
+  cart.setCustomer(getCustomer());
+  	
+  	
+  
+  	cartRepository.save(cart);
+  	returnParams.put("status", true);
+  } catch (Exception e) {
+  	e.printStackTrace();
+  		returnParams.put("status", false);
+  		returnParams.put("msg", "Cart Addition Failed!");
+  	
+  	
+  }
+  
+  return returnParams;
+  }
+  
+  @RequestMapping("/calculatevat")
+  public HashMap<String, Double> calculateVat(@RequestBody ShippingAddress shippingaddress) {
+  	HashMap<String, Double> returnParams = new HashMap<String, Double>();
+  //	Cart cart=new Cart();
+  	Cart cart = getCustomer().getCart();
+  	float total=cart.getTotalcost();
+  	String state = shippingaddress.getState();
+ StateVat statevat= stateVatRepository.findBystate(state);  
+ StateVat country = stateVatRepository.findBystate("india");
+	double cst = (country.getVatPercent()*total)/100;
+	double vat= (statevat.getVatPercent()*total)/100;
+	double finalprice = total+cst+vat;
+	returnParams.put("cst", cst);
+	returnParams.put("vat", vat);
+	returnParams.put("finalprice", finalprice);
+
+
+	return returnParams;
+  	
+  }
+}
 
   

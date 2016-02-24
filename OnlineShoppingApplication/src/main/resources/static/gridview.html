@@ -77,7 +77,7 @@ a{
 					<td class="centeralign">{{product.productPrice}}</td>
 					<td ng-hide="authenticatedadd"><a href="#login"  class="button" role="button">Add to cart</a></td>
 		<td ng-show="user">			
-   <a  href="#" class="button" role="button">Add to cart</a></td>
+   <a  href="" class="button" ng-click="addtoCart(product)" role="button">Add to cart</a></td>
      <td ng-show="admin">  <a   style="float:right" href="#editproduct/{{product.productId}}" class="button" role="button">Edit</a>
           
     </td>
