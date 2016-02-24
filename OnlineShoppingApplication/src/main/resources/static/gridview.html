@@ -1,8 +1,8 @@
 <html>
-<head>
+<!-- <head>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-animate.min.js"></script>
-	<!--<link href="animate.css" rel="stylesheet">-->
+	<link href="animate.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
 <style>
@@ -68,7 +68,7 @@ a{
 ;
  }  
 </style>
-
+ -->
 <body>
 <div ng-controller="gridctrl">
   <!--  <div class="panel panel-default"  ng-repeat="image in images">
@@ -83,7 +83,7 @@ a{
  
 <div class="row" > 
   
-  <table class="table table-bordered ">
+<!--   <table class="table table-bordered ">
 			<thead>
 				<tr>
 				<td></td>
@@ -98,17 +98,19 @@ a{
 				<td><img ng-src="{{product.image}}"></img></td>
 					<td class="centeralign">{{product.productName}}</td>
 					
-					<td class="centeralign">{{product.productPrice}}</td>
-					<td ng-hide="authenticatedadd"><a href="#login"  class="button" role="button">Add to cart</a></td>
-		<td ng-show="user">			
-   <a  href="#" class="button" role="button">Add to cart</a></td>
-     <td ng-show="admin">  <a   style="float:right" href="#editproduct/{{product.productId}}" class="button" role="button">Edit</a>
+					<td class="centeralign">Rs.{{product.productPrice}}</td>
+		<td ng-hide="authenticatedadd"><a href="#login"  class="button" role="button">Add to cart</a></td>
+		<td ng-show="user"><a  href="#" class="button" role="button">Add to cart</a></td>
+     	<td ng-show="admin">  <a   style="float:right" href="#editproduct/{{product.productId}}" class="button" role="button">Edit</a>
           
     </td>
-					<!-- <td>{{product.brands.brandName}}</td> -->
+	
 				</tr> 
 			</tbody>
-		</table>
+		</table> -->
+		
+		
+		
 <!-- 		<div class="rightalign">
 		<ul class="pagination">
 <li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
@@ -119,25 +121,36 @@ a{
 
 </ul>
 	</div> -->
-  <!-- <div  class="col-sm-6 col-md-4" ng-repeat="image in images">
-  <a href="#view/{{image.id}}">   <div style="height:350px" class="thumbnail">
-      <img  ng-src="{{image.imageUrl}}" alt="{{image.name}}">
+	
+	
+	
+  <div  class="col-sm-6 col-md-4" ng-repeat="product in products">
+  <a href="#view/{{image.id}}"> 
+    <div style="height:250px" class="thumbnail">
+      <img  ng-src="{{product.image}}" alt="{{image.name}}"></div>
       <div  class="caption">
-        <h3>{{image.name}}</h3> </a>
-        <h4>Rs.{{image.price}}</h4>
-      
-          <a href="#" class="btn btn-info" role="button">View</a>
-        <a href="#" class="btn btn-default" role="button">Edit</a>
+        <h3>{{product.productName}}</h3> </div></a>
+        <h4>Rs.{{product.productPrice}}
+        
+        <a style="float:right" href="#login" ng-hide="authenticatedadd"  class="btn btn-info"  role="button">Add to cart</a>
+		<a  style="float:right" href=""  ng-show="user" class="btn btn-info" role="button">Add to cart</a>
+     	  <a   style="float:right" href="#editproduct/{{product.productId}}" ng-show="admin" class="btn btn-info" role="button">Edit</a> 
+        </h4>
+       
+        
+        
+
+       
+       
+       <!--  <a href="#" class="btn btn-default" role="button">Edit</a>
         <a ng-show="user" href="#" class="button" role="button">Add to cart</a>
-       <a ng-show="admin"  style="float:right" href="#editproduct" class="button" role="button">Edit</a>
+       <a ng-show="admin"  style="float:right" href="#editproduct" class="button" role="button">Edit</a> -->
          
-      
+     
     </div>
      </div>
-  </div> -->
+  </div> 
   
- </div>
-</div> 
 </body>
 </html>
 

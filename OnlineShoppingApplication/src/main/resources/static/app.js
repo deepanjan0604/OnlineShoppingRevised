@@ -65,7 +65,10 @@ app.config(['$routeProvider',
              .when('/addproducts', {
                    templateUrl: 'addproduct.html',
                    controller: 'addproductctrl'
-                 }) 
+                 }) /*.when('/',{
+                	 templateUrl:'main.html',
+                	 controller:'mainctrl'
+                 })*/
                  
                  
                  .otherwise({
@@ -182,14 +185,14 @@ if($rootScope.response.role=='user')
 	{
 	$rootScope.user=true;
 	$rootScope.admin=false;
-
+	//$rootScope.authenticatedadd=false;
 //alert($rootScope.user);
 	}
 else
 	{
 	$rootScope.admin=true;
 	$rootScope.user=false;
-
+	//$rootScope.authenticatedadd=false;
 	//alert($rootScope.admin);
 	}
 			
@@ -629,7 +632,42 @@ app.controller('editcustomerctrl',[ '$scope','$route','$routeParams', '$rootScop
 		    }
 		};
 		
+		$scope.addCategory=function(){
+			 $http({
+	  				method: 'POST',
+	  				url : '/addcategory',
+	  				data : $scope.category,
+	  			
+	  			}).then(function(response){
+	  				if(response.data.status){
+	  					alert('Category added Successfully!');
+	  					$scope.category= {};
+	  					
+	  				} else {
+	  					alert('Failed!');
+	  				}
+	  			});
+		}
 		
+		
+$scope.addBrand=function(){
+	$http({
+			method: 'POST',
+			url : '/addbrand',
+			data : $scope.brand,
+		
+		}).then(function(response){
+			if(response.data.status){
+				alert('Brand Added Successfully!');
+				$scope.brand= {};
+				
+			} else {
+				alert(' Failed!');
+			}
+		});
+		}
+
+
 $scope.saveproduct = function(){
 	$scope.product.image=$rootScope.srcData;
 	$scope.product.extn="jpg";
@@ -725,7 +763,7 @@ debugger;
                            	     
 		$http({
 			method : 'GET',
-			url : '/',	
+			url : '/products',	
 		}).then(function(response) {
 		
 			$rootScope.products = angular.copy(response.data);		 
@@ -888,3 +926,19 @@ app.controller('displayctrl',[ '$scope', '$rootScope','$http',
   */
 
 
+app.controller('mainctrl', 
+		[ '$scope','$route','$routeParams', '$rootScope','$http',
+		     function($scope,$route,$routeParams,$rootScope, $http)
+		     {
+$http({
+	
+	   method : 'GET',
+                        			
+                        			
+    url : '/customers/one',
+                        			
+     }).then(function(response) {
+                        			$scope.customer = angular.copy(response.data);
+                        			 
+                        		});
+}]);

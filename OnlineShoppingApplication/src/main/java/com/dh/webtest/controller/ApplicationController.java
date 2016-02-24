@@ -254,6 +254,44 @@ public HashMap<String, Object> savecustomer(@RequestBody Customer customer) {
 
 }
 
+
+@RequestMapping("/addcategory")
+public HashMap<String, Object> category(@RequestBody Category category) {
+  HashMap<String, Object> returnParams = new HashMap<String, Object>();
+  
+  try {
+    categoryRepository.save(category);
+    returnParams.put("status", true);
+  } catch (Exception e) {
+    returnParams.put("status", false);
+    returnParams.put("msg", "customer Addition Failed!!!!!!");
+    
+
+    
+  }
+  return returnParams;  
+
+}
+
+
+@RequestMapping("/addbrand")
+public HashMap<String, Object> category(@RequestBody Brand brand) {
+  HashMap<String, Object> returnParams = new HashMap<String, Object>();
+  
+  try {
+   brandRepository.save(brand);
+    returnParams.put("status", true);
+  } catch (Exception e) {
+    returnParams.put("status", false);
+    returnParams.put("msg", "customer Addition Failed!!!!!!");
+    
+
+    
+  }
+  return returnParams;  
+
+}
+
 @RequestMapping("/addshippingaddress")
 public HashMap<String, Object> addShippingaddress(@RequestBody ShippingAddress shippingaddress) {
   HashMap<String, Object> returnParams = new HashMap<String, Object>();
