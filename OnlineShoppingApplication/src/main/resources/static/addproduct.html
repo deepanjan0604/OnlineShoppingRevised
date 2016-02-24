@@ -28,20 +28,29 @@
 <option  ng-repeat="cat in categories" value="{{cat.categoryName}}">{{cat.categoryName}}
 </option>
         </select>
-        
+<!-- <button   data-toggle="modal" data-target="#myModalCategory" class="glyphicon glyphicon-plus" style="vertical-align:middle"><span>Add Category </span></button> -->
+        <a data-toggle="modal" data-target="#myModalCategory">
+          <span class="glyphicon glyphicon-plus"></span>Add Category
+        </a>  
         <br>
-			
+			<br>
 		 Brand: <select class="form-control" ng-model="product.brand.brandName">
  <option  ng-repeat="brand in brands" value="{{brand.brandName}}">{{brand.brandName}}
      </option>
         </select> 
+        <!-- <button   data-toggle="modal" data-target="#myModalBrand" class="glyphicon glyphicon-plus" style="vertical-align:middle"><span>Add Brand </span></button> -->
+        
+        <a data-toggle="modal" data-target="#myModalBrand">
+          <span class="glyphicon glyphicon-plus"></span>Add Brand
+        </a>
+         
          <br>
          
          
       <!--   Select Image:  <input type="file" file-model="myFile" ng-model="product.image" class="btn btn-success"/>
    <button  class="btn btn-success" ng-click="uploadFile()">Upload</button> 
     <br><br> -->
-    
+    <br><br>
      Select Image:  <input id="inputFileToLoad" type="file"  class="btn btn-success"/>
    <button  class="btn btn-success" ng-click="loadImageFileAsURL()">Upload</button> 
     <br><br>
@@ -61,9 +70,66 @@
 </form>
   
   <br>
+  
+  
+  
+          
+       <div class="modal fade" id="myModalCategory" role="dialog">
+          <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Add a new Category</h4>
+              </div>
+              <div class="modal-body">
+              <form  name="form1"  novalidate>
+               Category: <input type="text" class="form-control" name="addressline1"
+               ng-model="category.categoryName" ng-required="true"/>
+               <span style="color:red" ng-show="form1.addressline1.$dirty && 
+               form1.addressline1.$error.required"> Category Name is Required!</span><br /> 
+ 
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-info" data-dismiss="modal" ng-click="addCategory()"><a href='#addproducts'>Add Category</a></button>  
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+        <div class="modal fade" id="myModalBrand" role="dialog">
+          <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">Add a new Shipping Address</h4>
+              </div>
+              <div class="modal-body">
+              <form  name="form1"  novalidate>
+               Brand: <input type="text" class="form-control" name="addressline1"
+               ng-model="brand.brandName" ng-required="true"/>
+               <span style="color:red" ng-show="form1.addressline1.$dirty && 
+               form1.addressline1.$error.required"> Brand Name is Required!</span><br /> 
+ 
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-info" data-dismiss="modal" ng-click="addBrand()"><a href='#addproducts'>Add Brand</a></button>  
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
+
+</div>
+</div>
 
 
 </div>
-</div>
-</div>
+
 </body>

@@ -105,10 +105,16 @@ font-family: 'Spinnaker', sans-serif;
  </tr>
  
  
+<<<<<<< HEAD
   <tr ng-repeat="item in cartitems">
     <td ><div class="col-md-4"><img height="150" width="150" ng-src="{{item.product.image}}"></div>
+=======
+  <tr ng-repeat="cart in cart">
+    <td><div class="col-md-4"><img ng-src="{{image.imageUrl}}"></div>
+>>>>>>> branch 'master' of https://github.com/deepanjan0604/OnlineShoppingRevised.git
     <div class="col-md-offset-5">
     
+<<<<<<< HEAD
    
     <a href="#"  ><b> Product Name: </b> {{item.product.productName}}</a><br>
     
@@ -117,16 +123,41 @@ font-family: 'Spinnaker', sans-serif;
     
     
      <a ng-hide="show" href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a>
+=======
+    <a href="#"><b>{{image.name}}</b></a><br>
+    <a   ng-repeat="cartitem in cart.cartitem" ><b> Product Name: </b> {{cartitem.product.productName}}</a><br>
+    
+    
+    <p ng-hide="show" ng-repeat="cartitem in cart.cartitem"> <b>Quantity: </b>{{cartitem.quantity}}<br>
+    
+    
+     <a href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a></p>
+>>>>>>> branch 'master' of https://github.com/deepanjan0604/OnlineShoppingRevised.git
 <br>
+<<<<<<< HEAD
 
 <div ng-show="show" >
     <input type="number"  ng-model="item.quantity" min="1" max="{{item.product.quantity}}"  />
+=======
+<div ng-show="show">
+
+    <input type="number" ng-model="image.quantity" min="1" value="image.quantity" />
+>>>>>>> branch 'master' of https://github.com/deepanjan0604/OnlineShoppingRevised.git
     <br>
     <button class="savebutton" ng-click="show=!show;changeQuantity(item)">Save</button>
     <button class="btn btn-default" ng-click="show=!show">Cancel</button>
+<<<<<<< HEAD
 </div>
+=======
+
+>>>>>>> branch 'master' of https://github.com/deepanjan0604/OnlineShoppingRevised.git
    </td>
+<<<<<<< HEAD
      <td style="text-align:right">Rs.{{item.initialprice}}</td>
+=======
+     <td ng-repeat="cartitem in cart.cartitem" 
+    style="text-align:right">Rs.{{cartitem.product.productPrice}}</td>
+>>>>>>> branch 'master' of https://github.com/deepanjan0604/OnlineShoppingRevised.git
     
     
     

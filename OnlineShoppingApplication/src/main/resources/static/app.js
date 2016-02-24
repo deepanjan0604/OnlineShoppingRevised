@@ -65,7 +65,10 @@ app.config(['$routeProvider',
              .when('/addproducts', {
                    templateUrl: 'addproduct.html',
                    controller: 'addproductctrl'
-                 }) 
+                 }) /*.when('/',{
+                	 templateUrl:'main.html',
+                	 controller:'mainctrl'
+                 })*/
                  
                  
                  .otherwise({
@@ -192,14 +195,14 @@ if($rootScope.response.role=='user')
 	{
 	$rootScope.user=true;
 	$rootScope.admin=false;
-
+	//$rootScope.authenticatedadd=false;
 //alert($rootScope.user);
 	}
 else
 	{
 	$rootScope.admin=true;
 	$rootScope.user=false;
-
+	//$rootScope.authenticatedadd=false;
 	//alert($rootScope.admin);
 	}
 			
@@ -633,7 +636,42 @@ app.controller('editcustomerctrl',[ '$scope','$route','$routeParams', '$rootScop
 		    }
 		};
 		
+		$scope.addCategory=function(){
+			 $http({
+	  				method: 'POST',
+	  				url : '/addcategory',
+	  				data : $scope.category,
+	  			
+	  			}).then(function(response){
+	  				if(response.data.status){
+	  					alert('Category added Successfully!');
+	  					$scope.category= {};
+	  					
+	  				} else {
+	  					alert('Failed!');
+	  				}
+	  			});
+		}
 		
+		
+$scope.addBrand=function(){
+	$http({
+			method: 'POST',
+			url : '/addbrand',
+			data : $scope.brand,
+		
+		}).then(function(response){
+			if(response.data.status){
+				alert('Brand Added Successfully!');
+				$scope.brand= {};
+				
+			} else {
+				alert(' Failed!');
+			}
+		});
+		}
+
+
 $scope.saveproduct = function(){
 	$scope.product.image=$rootScope.srcData;
 	$scope.product.extn="jpg";
@@ -831,6 +869,7 @@ debugger;
 	});
                                                              
  }])
+<<<<<<< HEAD
 app.controller('cartctrl', ['$scope','$route','$routeParams', '$rootScope','$http',
                      	     function($scope,$route,$routeParams,$rootScope, $http){
 	
@@ -899,9 +938,69 @@ app.controller('cartctrl', ['$scope','$route','$routeParams', '$rootScope','$htt
 				}
 				})
 			}
+=======
+app.controller('cartctrl', 
+	[ '$scope','$route','$routeParams', '$rootScope','$http',
+	     function($scope,$route,$routeParams,$rootScope, $http)
+	     {
+  /* $scope.images=[
+  {
+    "id": "1",
+    "imageUrl": "1.jpg",
+    "price":"343534",
+    "name": "Ara1",
+    "quantity":1
+   },
+    {
+    "id": "2",
+    "imageUrl": "1.jpg",
+    "price":"34534",
+    "name": "Ara2",
+     "quantity":2
+   }
+   ]*/
+   
+   /*$scope.shippingAddresses=[
+     {
+       "id":"1",
+       "address1":"indu aranya",
+       "address2":"nagole hyd",
+       "city":"hyd",
+       "phone":"5555555555",
+       "pin":"4545456",
+       "state":"telangana"
+     },
+      {
+        "id":"2",
+       "address1":"indu aranya",
+       "address2":"nagole hyd",
+       "city":"hyd",
+       "phone":"5555555555",
+       "pin":"4545456",
+       "state":"telangana"
+     },
+   ]*/
+>>>>>>> branch 'master' of https://github.com/deepanjan0604/OnlineShoppingRevised.git
   /*  $scope.addShipping=function(){
             $scope.shippingAddresses.push($scope.shippingAddress);
              $scope.shippingAddress='';*/
+	
+	
+	
+
+	  $http({
+			
+		   method : 'GET',
+	                           			
+	                           			
+	       url : '/cart',
+	                           			
+	        }).then(function(response) {
+	                           			$scope.cart = angular.copy(response.data);
+	                           			
+	                           			debugger;
+	                           		});
+	  
     
  }])
  
@@ -981,3 +1080,19 @@ app.controller('displayctrl',[ '$scope', '$rootScope','$http',
   */
 
 
+app.controller('mainctrl', 
+		[ '$scope','$route','$routeParams', '$rootScope','$http',
+		     function($scope,$route,$routeParams,$rootScope, $http)
+		     {
+$http({
+	
+	   method : 'GET',
+                        			
+                        			
+    url : '/customers/one',
+                        			
+     }).then(function(response) {
+                        			$scope.customer = angular.copy(response.data);
+                        			 
+                        		});
+}]);

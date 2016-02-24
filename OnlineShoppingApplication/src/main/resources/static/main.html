@@ -158,24 +158,29 @@
    <nav  class="navbar-fixed-top"  id="hormenu">
      <ul>
        <li><a id="brand" href="#home">ShopOnline.com</a></li>
-         <li><a href='#gridview'>View Products</a></li>
+         <li><a href='#gridview'><span class="glyphicon glyphicon-home"></span></a></li>
           <li  ng-show="admin"><a href='#addproducts'>Add products</a></li>
        <li ng-show="admin"><a href='#'>Order History</a></li>
        
-    
 
        <div class="rightalign">
-      <li ng-show="user" ><a href='#viewcustomer'>My Account <span class="glyphicon glyphicon-menu-down" ></span> </a>
+      <li ng-show="user" ><a href='#viewcustomer'>hii!! {{customer.userName}} <span class="glyphicon glyphicon-menu-down" ></span> </a>
          <ul class="submenu">
          <li><a href='#viewcustomer'>View my Profile</a></li>
          <li><a href='#editcustomer'>Edit my Profile</a></li>
          <li><a href='#'>My Orders</a></li>
+         <li ng-show="user"><a href='' ng-click="logOut()">Logout</a></li>
          
          </ul></li>
       <li ng-show="user"><a href='#cart'><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-     <li ng-hide="authenticated"><a href='#login' >Sign In</a></li>
+     <li ng-hide="authenticated">
+     <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Sign In</button> -->
+     
+   <a href='#login'>Sign In</a>
+    </li>
      <li ng-hide="authenticated"><a  href='#newcustomer'>New User? Sign Up</a></li>
-     <li ng-show="authenticated"><a href='' ng-click="logOut()">Logout</a></li>
+     <li ng-show="admin"><a href='' ng-click="logOut()">Logout</a></li>
+   <li><a href='#'>Contact Us</a></li>
 </div>
 		</ul>
      
@@ -214,7 +219,7 @@
  
 <!--<div class="col-md-8">
 <div class="container">-->
-  
+ 
 <div class="row" style="padding-top:100px">
 <div class="col-md-8 col-md-offset-3">
  

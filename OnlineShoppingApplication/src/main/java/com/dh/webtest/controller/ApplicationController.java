@@ -143,13 +143,28 @@ public List<Brand> getBrands() {
 
 
 @RequestMapping("/cart")
+
 public Cart getCart() {
 	Customer customer = getCustomer();
 	int cartid = customer.getCart().getCartId();
   return cartRepository.findOne(cartid);
 } 
 
+	/*Customer customer = getCustomer();
+	List<Cart> cart = customer.getCart();
+	return (List<Cart>) cart;*/
 
+	//Customer customer = getCustomer();
+	
+	//return (List<Cart>) customer.getCart();
+
+	
+
+@RequestMapping("/cart/{cartId}")
+public Cart  getCart (@PathVariable("cartId") int cartId){
+
+return  cartRepository.findOne(cartId);
+}
 
 @RequestMapping("/cartitems")
 public List<CartItem> getCartItem() {
@@ -231,6 +246,44 @@ public HashMap<String, Object> savecustomer(@RequestBody Customer customer) {
   
   try {
     customerRepository.save(customer);
+    returnParams.put("status", true);
+  } catch (Exception e) {
+    returnParams.put("status", false);
+    returnParams.put("msg", "customer Addition Failed!!!!!!");
+    
+
+    
+  }
+  return returnParams;  
+
+}
+
+
+@RequestMapping("/addcategory")
+public HashMap<String, Object> category(@RequestBody Category category) {
+  HashMap<String, Object> returnParams = new HashMap<String, Object>();
+  
+  try {
+    categoryRepository.save(category);
+    returnParams.put("status", true);
+  } catch (Exception e) {
+    returnParams.put("status", false);
+    returnParams.put("msg", "customer Addition Failed!!!!!!");
+    
+
+    
+  }
+  return returnParams;  
+
+}
+
+
+@RequestMapping("/addbrand")
+public HashMap<String, Object> category(@RequestBody Brand brand) {
+  HashMap<String, Object> returnParams = new HashMap<String, Object>();
+  
+  try {
+   brandRepository.save(brand);
     returnParams.put("status", true);
   } catch (Exception e) {
     returnParams.put("status", false);
