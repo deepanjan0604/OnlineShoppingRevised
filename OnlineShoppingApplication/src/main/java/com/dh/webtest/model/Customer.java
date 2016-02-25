@@ -68,8 +68,8 @@ public class Customer {
 	List<ShippingAddress> shippingAddress;
 	
 	
-	@OneToMany(mappedBy = "customer", orphanRemoval = true)
-	List<Cart> cart;
+	@OneToOne(mappedBy = "customer", orphanRemoval = true)
+	Cart cart;
 
 	@OneToMany(mappedBy = "customer", orphanRemoval = true)
 	List<Order> order;
@@ -174,12 +174,12 @@ public class Customer {
 		return authority;
 	}*/
 
-	public List<Cart> getCart() {
+	public Cart getCart() {
 		return cart;
 	}
 
 
-	public void setCart(List<Cart> cart) {
+	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
 

@@ -61,8 +61,7 @@ public class Product {
 	
 	Category category;
 
-	@OneToMany(mappedBy = "product",  orphanRemoval = true)
-	List<CartItem> cartitem;
+	
 
 	public int getProductId() {
 		return productId;
@@ -122,13 +121,7 @@ public class Product {
 		this.category = category;
 	}
 
-	public List<CartItem> getCartitem() {
-		return cartitem;
-	}
-
-	public void setCartitem(List<CartItem> cartitem) {
-		this.cartitem = cartitem;
-	}
+	
 
 	public String getImage() {
 		return image;

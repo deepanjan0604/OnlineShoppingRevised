@@ -147,6 +147,15 @@ $rootScope.logOut= function(){
 	$rootScope.admin=false;
 	$rootScope.user=false;
 }
+
+
+$http({		
+	method : 'GET',		
+	url : '/brands',     		
+}).then(function(response) {		
+	$rootScope.brands = response.data;		
+			
+})
 })
 
 	
@@ -376,8 +385,9 @@ app.controller('editcustomerctrl',[ '$scope','$route','$routeParams', '$rootScop
 				data : $scope.shippingAddress
 			}).then(function(response){
 				if(response.data.status){
+					$scope.shippingAddress.push($scope.shippingAddress);
 					alert('shippingaddress Added Successfully!');
-					
+					location.reload();
 					
 				
 				/*	$rootScope.shippingaddresses.push($rootScope.shippingAddress);	
@@ -642,9 +652,10 @@ app.controller('editcustomerctrl',[ '$scope','$route','$routeParams', '$rootScop
 	  			
 	  			}).then(function(response){
 	  				if(response.data.status){
+	  					$scope.category.push($scope.category);
 	  					alert('Category added Successfully!');
-	  					$scope.category= {};
-	  					
+	  					//$scope.category= {};
+	  					location.reload();
 	  				} else {
 	  					alert('Failed!');
 	  				}
@@ -660,8 +671,10 @@ $scope.addBrand=function(){
 		
 		}).then(function(response){
 			if(response.data.status){
+				$scope.brand.push($scope.brand);
 				alert('Brand Added Successfully!');
-				$scope.brand= {};
+				//$scope.brand= {};
+				location.reload();
 				
 			} else {
 				alert(' Failed!');
@@ -749,7 +762,85 @@ debugger;
 	               */
 	             $scope.title="List Of Products";
 	
-
+	             $scope.addtoCart = function(product){		
+	            		/* $http({		
+	            				method : 'GET',		
+	            				url : '/products/'+$routeParams.id,		
+	            			}).then(function(response) {		
+	            				$rootScope.product = response.data;		
+	            				 $scope.cartitem={ "quantity":1,		
+	            				                   product:[],		
+	            				 };		
+	            				 //$scope.cartitem.product=[];		
+	            				 $scope.cartitem.product.push($scope.product);		
+	            		});*/		
+	            					
+	            	 		
+	            	 $http({		
+	            		 method:'GET',		
+	            		 url: '/cartcheck'	 		
+	            	 }).then(function(response){	            				
+	            		 if(response.data.status=='true')		
+	            			 {		
+	            			   $scope.cartitem={ "quantity":1,		
+	            	                 "product":product		
+	            			                 }		
+	            			  alert('true');		
+	            		 $http({		
+      					method : 'POST',		
+      					url : '/addcartitem',		
+      						data:$scope.cartitem,		
+      				}).then(function(response) {		
+      					alert('cart item added');		
+      							
+      				})		
+	            			 }		
+	            			 else		
+	            				 {		
+		            			 alert('false');		
+		            			 $scope.cartitem=[{ "quantity":1,		
+		            	                 "product":product		
+		            			 }];		
+		            			 $scope.cart={		
+		            					 "cost":355,		
+		            					 "cartitem" : $scope.cartitem		
+	            			 };		
+		            			// $scope.cart=[];		
+		            			// $scope.cart.push($scope.cartitem);		
+		            			 debugger;		
+		            			 $http({		
+		            					method : 'POST',		
+		            					url : '/addcart',		
+		            						data:$scope.cart,		
+		            				}).then(function(response) {		
+		            					alert('cart added');		
+		            							
+		            				})		
+	            				 }		
+	            	 });		
+	            					
+	            	 		
+	            	 		
+	            	 		
+	            	/* $scope.cartitem={ "quantity":1,		
+	            	                 "product":product		
+	            			 }		
+	            			 $scope.cart={		
+	            			              		
+	            			             "cartitem" : $scope.cartitem		
+	            			 };		
+	            			 //$scope.cart.push($scope.cartitem);		
+	            				
+	            			 $http({		
+	            					method : 'POST',		
+	            					url : '/addtocart',		
+	            						data:$scope.cartitem,		
+	            				}).then(function(response) {		
+	            					alert('');		
+	            							
+	            				});*/		
+	            		 }                     			  		
+	            	                          	
                           			  
                           			  
 /* 
@@ -789,11 +880,98 @@ debugger;
 	});
                                                              
  }])
-app.controller('cartctrl', 
+ 
+ 
+ 
+ 
+ app.controller('cartctrl', ['$scope','$route','$routeParams', '$rootScope','$http',		
+                     	     function($scope,$route,$routeParams,$rootScope, $http){		
+			
+	 $http({		
+			method : 'GET',		
+			url : '/shippingaddresses/one',		
+					
+		}).then(function(response) {		
+			$scope.shippingAddresses = angular.copy(response.data);		
+			 		
+		});		
+			
+			
+	$scope.changeQuantity= function(item){		
+				
+		 $http({		
+				method : 'POST',		
+				url : '/addcartitem',		
+					data: item,		
+			}).then(function(response) {		
+				alert('cart item added');		
+				location.reload();		
+			})			
+	}		
+	$scope.calculateVat= function(sa){		
+				
+		 $http({		
+				method : 'POST',		
+				url : '/calculatevat',		
+				data: sa,		
+			}).then(function(response) {		
+				$rootScope.tax=response.data;		
+						
+						
+				alert('vat');		
+				//location.reload();		
+			})			
+	}		
+	//$scope.cart={};		
+			
+	 		
+	  $http({		
+					
+		   method : 'GET',		
+	                           					
+	                           					
+	       url : '/cart',		
+	                           					
+	        }).then(function(response) {		
+	                           			$scope.cart = angular.copy(response.data);		
+	                           			$scope.cartitems=$scope.cart.cartitem;		
+	                           				
+	                           		});		
+	  		
+	  $scope.addShipping = function(){		
+					
+			$http({		
+				method: 'POST',		
+				url : '/addshippingaddress',		
+				data : $scope.shippingAddress		
+			}).then(function(response){		
+				if(response.data.status){		
+					/*$scope.shippingAddresses=[];*/		
+		            $scope.shippingAddresses.push($scope.shippingAddress);		
+					alert('shippingaddress Added Successfully!');	
+					location.reload();
+				}		
+				})		
+			}
+ }])
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+/*app.controller('cartctrl', 
 	[ '$scope','$route','$routeParams', '$rootScope','$http',
 	     function($scope,$route,$routeParams,$rootScope, $http)
 	     {
-  /* $scope.images=[
+   $scope.images=[
   {
     "id": "1",
     "imageUrl": "1.jpg",
@@ -808,9 +986,9 @@ app.controller('cartctrl',
     "name": "Ara2",
      "quantity":2
    }
-   ]*/
+   ]
    
-   /*$scope.shippingAddresses=[
+   $scope.shippingAddresses=[
      {
        "id":"1",
        "address1":"indu aranya",
@@ -829,10 +1007,10 @@ app.controller('cartctrl',
        "pin":"4545456",
        "state":"telangana"
      },
-   ]*/
-  /*  $scope.addShipping=function(){
+   ]
+    $scope.addShipping=function(){
             $scope.shippingAddresses.push($scope.shippingAddress);
-             $scope.shippingAddress='';*/
+             $scope.shippingAddress='';
 	
 	
 	
@@ -852,7 +1030,7 @@ app.controller('cartctrl',
 	  
     
  }])
- 
+ */
  
  
  
@@ -928,19 +1106,3 @@ app.controller('displayctrl',[ '$scope', '$rootScope','$http',
   */
 
 
-app.controller('mainctrl', 
-		[ '$scope','$route','$routeParams', '$rootScope','$http',
-		     function($scope,$route,$routeParams,$rootScope, $http)
-		     {
-$http({
-	
-	   method : 'GET',
-                        			
-                        			
-    url : '/customers/one',
-                        			
-     }).then(function(response) {
-                        			$scope.customer = angular.copy(response.data);
-                        			 
-                        		});
-}]);

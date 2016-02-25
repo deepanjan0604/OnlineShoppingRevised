@@ -35,7 +35,7 @@ public class CartItem{
 	Cart cart;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonIgnore
+	//@JsonIgnore
 	Product product;
 	
 	public int getCartitemId() {
@@ -70,6 +70,14 @@ public class CartItem{
 		this.product = product;
 	}
 	
-}
+	public float getInitialprice(){
+		float price = getProduct().productPrice;
+		int quantity = getQuantity();
+		float total = price*quantity;
+		return total;
+	}
+	}
+	
+
 
 

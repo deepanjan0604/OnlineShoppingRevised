@@ -1,3 +1,4 @@
+
 <html>
   <style>
     body{
@@ -87,6 +88,7 @@ font-family: 'Spinnaker', sans-serif;
       background-color:  #595959
 ;
  }  
+
     </style>
     
 <body ng-controller="cartctrl">
@@ -102,11 +104,24 @@ font-family: 'Spinnaker', sans-serif;
   <th style="text-align:right" class="col-md-6">Price(in Rs.)</th>
  </tr>
  
- 
+
+  <tr ng-repeat="item in cartitems">
+    <td ><div class="col-md-4"><img height="150" width="150" ng-src="{{item.product.image}}"></div>
+
   <tr ng-repeat="cart in cart">
     <td><div class="col-md-4"><img ng-src="{{image.imageUrl}}"></div>
+
     <div class="col-md-offset-5">
+
+   
+    <a href="#"  ><b> Product Name: </b> {{item.product.productName}}</a><br>
     
+    
+    <p ng-hide="show" > <b>Quantity: </b>{{item.quantity}}<br></p>
+    
+    
+     <a ng-hide="show" href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a>
+
     <a href="#"><b>{{image.name}}</b></a><br>
     <a   ng-repeat="cartitem in cart.cartitem" ><b> Product Name: </b> {{cartitem.product.productName}}</a><br>
     
@@ -116,14 +131,19 @@ font-family: 'Spinnaker', sans-serif;
     
      <a href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a></p>
 <br>
+
+<div ng-show="show" >
+    <input type="number"  ng-model="item.quantity" min="1" max="{{item.product.quantity}}"  />
 <div ng-show="show">
 
     <input type="number" ng-model="image.quantity" min="1" value="image.quantity" />
     <br>
-    <button class="savebutton" ng-click="show=!show">Save</button>
+    <button class="savebutton" ng-click="show=!show;changeQuantity(item)">Save</button>
     <button class="btn btn-default" ng-click="show=!show">Cancel</button>
+</div>
 
    </td>
+     <td style="text-align:right">Rs.{{item.initialprice}}</td>
      <td ng-repeat="cartitem in cart.cartitem" 
     style="text-align:right">Rs.{{cartitem.product.productPrice}}</td>
     
@@ -141,24 +161,25 @@ font-family: 'Spinnaker', sans-serif;
 <h2> Ship To </h2>
 <table class="table">
 <tr>
-  <th ></th>
-  <th class="col-md-4">Address</th>
+<!--   <th ></th>
+ -->  <th class="col-md-4">Address</th>
 					<th class="col-md-2" >Mobile</th>
 					<th class="col-md-2">City</th>
 					<th class="col-md-2">State</th>
 					<th class="col-md-2">Pin Code</th>
+					<th class="col-md-2">Select</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="sa in shippingAddresses">
-          <td><input type="checkbox" ng-model="shippingAddress.id" />
+
 					<td>{{sa.address1}},{{sa.address2}}</td>
 					<td>{{sa.phone}}</td>
           <td>{{sa.city}}</td>
 					<td>{{sa.state}}</td>
 					<td>{{sa.pin}}</td>
-        <!--<td>{{shippingAddress.id}}</td>-->
+        <td><button class="savebutton" ng-click="calculateVat(sa)">Select</button></td>
 				
 				
 			</tbody>
@@ -209,10 +230,11 @@ font-family: 'Spinnaker', sans-serif;
 <div id="ordersummary" class="col-md-5 col-md-offset-3">
 <h2>Order Summary</h2>
 
-Total cost :<br>
-Taxes(VAT) :
+Total cost : {{cart.totalcost}}<br>
+Tax(CST@12.5%)   :  {{tax.cst}} <br>
+Taxes(VAT) : {{tax.vat}}
 <hr>
-<h3>Total : </h3>
+<h3>Total : {{tax.finalprice}} </h3>
  <br>
 <button class="button" style="margin:auto;
   display:block;" class="btn btn-primary" ng-click="">Place the Order</button>	

@@ -133,7 +133,7 @@ a{
         <h4>Rs.{{product.productPrice}}
         
         <a style="float:right" href="#login" ng-hide="authenticatedadd"  class="btn btn-info"  role="button">Add to cart</a>
-    <a  style="float:right" href=""  ng-show="user" class="btn btn-info" role="button">Add to cart</a>
+    <a  style="float:right" href="" ng-click="addtoCart(product)" ng-show="user" class="btn btn-info" role="button">Add to cart</a>
         <a   style="float:right" href="#editproduct/{{product.productId}}" ng-show="admin" class="btn btn-info" role="button">Edit</a> 
         </h4>
        
