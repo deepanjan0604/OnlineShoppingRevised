@@ -1,12 +1,11 @@
-package com.dh.webtest.repository;
+package com.dh.web.repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/*import com.dh.example.webtest.model.User;*/
-import com.dh.webtest.model.  Customer;
+import com.dh.web.model.Customer;
 
 public interface CustomerRepository extends JpaRepository<  Customer, Integer>{
 

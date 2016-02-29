@@ -1,4 +1,4 @@
-package com.dh.webtest.controller;
+package com.dh.web.controller;
 
 
 
@@ -25,32 +25,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
-
-import com.dh.webtest.model.Brand;
-import com.dh.webtest.model.Cart;
-import com.dh.webtest.model.CartItem;
-import com.dh.webtest.model.Category;
-import com.dh.webtest.model.Customer;
-import com.dh.webtest.model.Order;
-import com.dh.webtest.model.OrderDetail;
-import com.dh.webtest.model.Product;
-import com.dh.webtest.model.ProductImage;
-import com.dh.webtest.model.ShippingAddress;
-import com.dh.webtest.model.StateVat;
-
-import com.dh.webtest.repository.BrandRepository;
-import com.dh.webtest.repository.CartRepository;
-import com.dh.webtest.repository.CartItemRepository;
-import com.dh.webtest.repository.CategoryRepository;
-import com.dh.webtest.repository.CustomerRepository;
-import com.dh.webtest.repository.OrderRepository;
-import com.dh.webtest.repository.ProductImageRepository;
-import com.dh.webtest.repository.OrderDetailRepository;
-import com.dh.webtest.repository.ProductRepository;
-import com.dh.webtest.repository.ShippingAddressRepository;
-import com.dh.webtest.repository.StateVatRepository;
+import com.dh.web.model.Brand;
+import com.dh.web.model.Cart;
+import com.dh.web.model.CartItem;
+import com.dh.web.model.Category;
+import com.dh.web.model.Customer;
+import com.dh.web.model.Order;
+import com.dh.web.model.OrderDetail;
+import com.dh.web.model.Product;
+import com.dh.web.model.ProductImage;
+import com.dh.web.model.ShippingAddress;
+import com.dh.web.model.StateVat;
+import com.dh.web.repository.BrandRepository;
+import com.dh.web.repository.CartItemRepository;
+import com.dh.web.repository.CartRepository;
+import com.dh.web.repository.CategoryRepository;
+import com.dh.web.repository.CustomerRepository;
+import com.dh.web.repository.OrderDetailRepository;
+import com.dh.web.repository.OrderRepository;
+import com.dh.web.repository.ProductImageRepository;
+import com.dh.web.repository.ProductRepository;
+import com.dh.web.repository.ShippingAddressRepository;
+import com.dh.web.repository.StateVatRepository;
 
 @RestController
 public class ApplicationController {
@@ -93,9 +89,6 @@ ProductImageRepository productImageRepository;
 
 @RequestMapping("/log")
 public HashMap<String, String> getLogin() {
-
-
-
 HashMap<String, String> returnParams = new HashMap<String, String>();
 
 System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -104,7 +97,6 @@ System.out.println(SecurityContextHolder.getContext().getAuthentication().getNam
 System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
 //    System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 System.out.println(SecurityContextHolder.getContext().getAuthentication());
-
 if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()==true)
 {
   returnParams.put("status", "true"); 
@@ -122,9 +114,6 @@ else
 {
   returnParams.put("status", "false");  
 }
-
-
-
 return returnParams;
 }
 
@@ -184,21 +173,44 @@ public List<Product> getProducts() {
   return (List<Product>) productRepository.findAll();
 }
 
+
+@RequestMapping("/products/brand/{brandId}")
+public List<Product> getProductByBrand(@PathVariable("brandId") int brandId) {
+return (List<Product>) productRepository.findByBrandBrandId(brandId);
+}
+
+
+@RequestMapping("/products/category/{categoryId}")
+public List<Product> getProductByCategory(@PathVariable("categoryId") int categoryId) {
+return (List<Product>) productRepository.findByCategoryCategoryId(categoryId);
+}
+
+
+
+
 @RequestMapping("/products/{productId}")
 public Product  getProduct (@PathVariable("productId") int productId){
-  //String productName = SecurityContextHolder.getContext().getAuthentication().getName();
   return  productRepository.findOne(productId);
 }
+
+
+
 
 @RequestMapping("/viewproducts")
 public List<Product> getviewProducts() {
   return (List<Product>) productRepository.findAll();
 } 
 
+
+
+
 @RequestMapping("/categories")
 public List<Category> getCategories() {
   return (List<Category>) categoryRepository.findAll();
 } 
+
+
+
 @RequestMapping("/shippingaddress/{shippingId}")
 public ShippingAddress getShippingAddress(@PathVariable("shippingId") int shippingId) {
   return  shippingAddressRepository2.findOne(shippingId);
@@ -207,9 +219,12 @@ public ShippingAddress getShippingAddress(@PathVariable("shippingId") int shippi
 
 @RequestMapping("/shippingaddresses")
 public List<ShippingAddress> getShippingAddress() {
-  
   return (List<ShippingAddress>) shippingAddressRepository.findAll();
 }
+
+
+
+
 @RequestMapping("/shippingaddresses/one")
 public List<ShippingAddress> getShippingAddressOne() {
   String userName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -219,28 +234,32 @@ public List<ShippingAddress> getShippingAddressOne() {
   return (List<ShippingAddress>) shippingAddressRepository.findByCustomer(customer);
 }
 
+
+
+
 @RequestMapping("/displaystate")
 public List<StateVat> getStateVat() {
   return (List<StateVat>) stateVatRepository.findAll();
 } 
 
+
+
 @RequestMapping("/savecustomer")
 public HashMap<String, Object> savecustomer(@RequestBody Customer customer) {
-  HashMap<String, Object> returnParams = new HashMap<String, Object>();
-  
+  HashMap<String, Object> returnParams = new HashMap<String, Object>(); 
   try {
     customerRepository.save(customer);
     returnParams.put("status", true);
   } catch (Exception e) {
     returnParams.put("status", false);
-    returnParams.put("msg", "customer Addition Failed!!!!!!");
-    
-
-    
+    returnParams.put("msg", "customer Addition Failed!!!!!!");   
   }
   return returnParams;  
-
 }
+
+
+
+
 
 
 @RequestMapping("/addcategory")
@@ -252,33 +271,33 @@ public HashMap<String, Object> category(@RequestBody Category category) {
     returnParams.put("status", true);
   } catch (Exception e) {
     returnParams.put("status", false);
-    returnParams.put("msg", "customer Addition Failed!!!!!!");
-    
-
-    
+    returnParams.put("msg", "customer Addition Failed!!!!!!");  
   }
   return returnParams;  
-
 }
+
+
+
+
 
 
 @RequestMapping("/addbrand")
 public HashMap<String, Object> category(@RequestBody Brand brand) {
-  HashMap<String, Object> returnParams = new HashMap<String, Object>();
-  
+  HashMap<String, Object> returnParams = new HashMap<String, Object>(); 
   try {
    brandRepository.save(brand);
     returnParams.put("status", true);
   } catch (Exception e) {
     returnParams.put("status", false);
-    returnParams.put("msg", "customer Addition Failed!!!!!!");
-    
-
-    
+    returnParams.put("msg", "customer Addition Failed!!!!!!");    
   }
   return returnParams;  
 
 }
+
+
+
+
 
 @RequestMapping("/addshippingaddress")
 public HashMap<String, Object> addShippingaddress(@RequestBody ShippingAddress shippingaddress) {
@@ -288,8 +307,7 @@ public HashMap<String, Object> addShippingaddress(@RequestBody ShippingAddress s
     Customer customer=  customerRepository.findByuserName(userName);
     System.out.println("Customer Object:"+customer);
     int id=customer.getCustomerId();
-    System.out.println("-----------------------> Customer Id:"+id);
-    
+    System.out.println("-----------------------> Customer Id:"+id);  
     shippingaddress.setCustomer(customer);
     String state=shippingaddress.getState();
     System.out.println("------------------->State is:"+state);
@@ -297,22 +315,17 @@ public HashMap<String, Object> addShippingaddress(@RequestBody ShippingAddress s
     int stateId=stateVat.getStateId();
     System.out.println("------------------------> State Id :"+stateId);
     shippingaddress.setStateVat(stateVat);
-    
-    
-    System.out.println(customer);
-    
+    System.out.println(customer);    
     shippingAddressRepository2.save(shippingaddress);
     returnParams.put("status", true);
   } catch (Exception e) {
     returnParams.put("status", false);
-    returnParams.put("msg", "Shippingaddress Addition Failed!!!!!!");
-    
-
-    
+    returnParams.put("msg", "Shippingaddress Addition Failed!!!!!!");    
   }
   return returnParams;  
-
 }
+
+
 
 @RequestMapping("/editshippingaddress")
 public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress shippingaddress) {
@@ -348,11 +361,6 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
       int stateId=stateVat.getStateId();*/
       
       shippingaddress.setStateVat(stateVat);
-      
-      
-      
-      
-
       shippingAddressRepository2.save(shippingaddress);
       returnParams.put("status", true);
     } catch (Exception e) {
@@ -360,7 +368,6 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
       returnParams.put("msg", "Shippingaddress Addition Failed!!!!!!");
     }
     return returnParams;  
-
   }
   
   
@@ -382,7 +389,6 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
       returnParams.put("msg", "product Addition Failed!!!!!!");   
     }
     return returnParams;  
-
   }*/
 
 
@@ -402,7 +408,6 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
       returnParams.put("msg", "product Addition Failed!!!!!!");   
     }
     return returnParams;  
-
   }
   
   
@@ -417,10 +422,7 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
     } catch (Exception e) {
       e.printStackTrace();
       returnParams.put("status", false);
-      returnParams.put("msg", "Details Addition Failed!!!!!!");
-      
-
-      
+      returnParams.put("msg", "Details Addition Failed!!!!!!"); 
     }
     return returnParams;
   }
@@ -494,27 +496,7 @@ return returnParams;
 }*/
 
 
-  /*@Autowired
-    ProductDAO productDAO;
-     
-  
-  @RequestMapping("/product")
-    public String index(Map<String, Object> map) {
-        try {
-            map.put("product", new Product());
-            map.put("productList", productDAO.list());
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
- 
-        return "products";
-      }*/
-      
-  /*@RequestMapping(value="/image/:id", produces="image/png")
-  public String getImage(){
-    return null;
-    
-  }*/
+
 
 
 @RequestMapping("/cartcheck")		
@@ -572,10 +554,7 @@ return returnParams;
 public HashMap<String, Object> addCart(@RequestBody Cart cart) {		
 	HashMap<String, Object> returnParams = new HashMap<String, Object>();		
 try		
-{		
-			
- 			
-			
+{			
 	List<CartItem> cartitems = cart.getCartitem();		
 	Iterator<CartItem> it = cartitems.iterator();		
 	while(it.hasNext()){		
@@ -586,22 +565,21 @@ try
 	}		
 				
 cart.setCustomer(getCustomer());		
-			
-			
-		
 	cartRepository.save(cart);		
 	returnParams.put("status", true);		
 } catch (Exception e) {		
 	e.printStackTrace();		
 		returnParams.put("status", false);		
-		returnParams.put("msg", "Cart Addition Failed!");		
-			
-			
-}		
-		
+		returnParams.put("msg", "Cart Addition Failed!");			
+}				
 return returnParams;		
 }		
-		
+
+
+
+
+
+
 @RequestMapping("/calculatevat")		
 public HashMap<String, Double> calculateVat(@RequestBody ShippingAddress shippingaddress) {		
 	HashMap<String, Double> returnParams = new HashMap<String, Double>();		
@@ -617,8 +595,7 @@ StateVat country = stateVatRepository.findBystate("india");
 	returnParams.put("cst", cst);		
 	returnParams.put("vat", vat);		
 	returnParams.put("finalprice", finalprice);		
-	return returnParams;		
-			
+	return returnParams;					
 }		
 }
  

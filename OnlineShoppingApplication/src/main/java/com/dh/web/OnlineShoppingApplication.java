@@ -1,4 +1,4 @@
-package com.dh.webtest;
+package com.dh.web;
 
 
 import org.springframework.boot.SpringApplication;

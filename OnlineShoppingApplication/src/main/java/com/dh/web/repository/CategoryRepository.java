@@ -1,8 +1,8 @@
-package com.dh.webtest.repository;
+package com.dh.web.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.dh.webtest.model. Category;
+import com.dh.web.model.Category;
 
 public interface CategoryRepository extends JpaRepository< Category, String>{
 

@@ -1,5 +1,4 @@
-package com.dh.webtest.model;
-import com.dh.webtest.*;
+package com.dh.web.model;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.dh.web.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

@@ -20,6 +20,14 @@ app.config(['$routeProvider',
          templateUrl: 'home.html',
          controller: 'homectrl'
        })
+        .when('/viewbrand/:id', {
+         templateUrl: 'brandproduct.html',
+         controller: 'brandctrl'
+       })
+        .when('/viewcategory/:id', {
+         templateUrl: 'categoryproduct.html',
+         controller: 'categoryctrl'
+       })
 
            .when('/gridview', {
          templateUrl: 'gridview.html',
@@ -29,7 +37,10 @@ app.config(['$routeProvider',
         templateUrl: 'cart2.html',
          controller: 'cartctrl'
        })
-  
+  .when('/orderconfirm', {
+        templateUrl: 'orderdetails.html',
+         controller: 'orderconfirmctrl'
+       })
       .when('/listview', {
         templateUrl: 'listview.html',
          controller: 'listctrl'
@@ -86,6 +97,16 @@ app.run(function($rootScope, $http, $location){
 	
 	}).then(function(response) {
 		$rootScope.categories = response.data;
+		
+	});
+	
+	
+	$http({
+		method : 'GET',
+		url : '/brands',     
+	
+	}).then(function(response) {
+		$rootScope.brands = response.data;
 		
 	});
 
@@ -218,6 +239,43 @@ else
 	}
 }]);	
 
+app.controller('brandctrl',[ '$scope', '$rootScope','$http','$routeParams' , 
+                             function($scope,$rootScope, $http, $routeParams)
+                             {
+	
+	
+	$http({
+			
+		   method : 'GET',
+	                           			
+	                           			
+	       url : '/products/brand/'+$routeParams.id,
+	                           			
+	        }).then(function(response) {
+	                           			$scope.products = angular.copy(response.data);
+	                           			 
+	                           		});
+	
+	
+                             }]);
+
+
+app.controller('categoryctrl',[ '$scope', '$rootScope','$http','$routeParams' , 
+                             function($scope,$rootScope, $http, $routeParams)
+                             {
+	$http({
+		
+		   method : 'GET',
+	                           			
+	                           			
+	       url : '/products/category/'+$routeParams.id,
+	                           			
+	        }).then(function(response) {
+	                           			$scope.products = angular.copy(response.data);
+	                           			 
+	                           		});
+	
+                             }]);	
 
 
 
@@ -314,34 +372,24 @@ app.controller('editcustomerctrl',[ '$scope','$route','$routeParams', '$rootScop
     
    $http({
                            			
-	   method : 'GET',
-                           			
-                           			
+	   method : 'GET',                     			
        url : '/customers/one',
                            			
         }).then(function(response) {
                            			$scope.edit = angular.copy(response.data);
                            			 
                            		});
-                           	    
-                           	    
- /*$scope.edit={
-		 customers:{
-			 
-			 }                      				
- }
-  */                         		
+                        	                      		
     $scope.savedetails = function(){	
 			
   		 $http({
   				method: 'POST',
   				url : '/savedetails',
-  				data : $scope.edit,
-  			
+  				data : $scope.edit  			
   			}).then(function(response){
   				if(response.data.status){
   					alert('customer edit Successfully!');
-  					$scope.edit= {};
+  				//	$scope.edit= {};
   					
   				} else {
   					alert('customer edit Failed!');
@@ -434,10 +482,6 @@ app.controller('editcustomerctrl',[ '$scope','$route','$routeParams', '$rootScop
 				       }
 			});
 		};
-		
-		
-		
-	
 	} ]);
  
  
@@ -895,7 +939,38 @@ debugger;
 			$scope.shippingAddresses = angular.copy(response.data);		
 			 		
 		});		
+	 $http({
+			method : 'GET',
+			url : '/displaystate',     
+		
+		}).then(function(response) {
+			$rootScope.statevat = response.data;
 			
+	});
+	 
+	 $scope.addShipping = function(){
+			
+			$http({
+				method: 'POST',
+				url : '/addshippingaddress',
+				data : $scope.shippingAddress
+			}).then(function(response){
+				if(response.data.status){
+					$scope.shippingAddress.push($scope.shippingAddress);
+					alert('shippingaddress Added Successfully!');
+					location.reload();
+					
+				
+				/*	$rootScope.shippingaddresses.push($rootScope.shippingAddress);	
+					
+				     $scope.shippingAddress='';*/ 	
+												} 
+				
+				else {
+					alert('shippingaddress Addition Failed!');
+				       }
+			});
+		};
 			
 	$scope.changeQuantity= function(item){		
 				
@@ -1104,5 +1179,10 @@ app.controller('displayctrl',[ '$scope', '$rootScope','$http',
 	     }]);
   
   */
+app.controller('orderconfirmctrl',['$scope','$rootScope','$http',function($scope,$rootScope,$http){
+	
+	
+	
+}]);
 
 

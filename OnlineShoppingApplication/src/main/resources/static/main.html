@@ -199,7 +199,12 @@
   <ul class="mainmenu">
       <li id="header">Shop by Catogory</li>
       
-   <li ng-repeat="category in categories"><a href='#'><span class="glyphicon glyphicon-chevron-right" ></span>  {{category.categoryName}}</a></li>
+   <li ng-repeat="category in categories"><a href='#viewcategory/{{category.categoryId}}'><span class="glyphicon glyphicon-chevron-right" ></span>  {{category.categoryName}}</a></li>
+ 
+ 
+ <li id="header">Shop by Brand</li>
+      
+   <li ng-repeat="brand in brands"><a href='#viewbrand/{{brand.brandId}}'><span class="glyphicon glyphicon-chevron-right" ></span>  {{brand.brandName}}</a></li>
   <!--  <li><a href="#e1" ng-click="showBoxOne = !showBoxOne"><span class="glyphicon glyphicon-chevron-right" ></span> Products</a>
    
    <div class="submenu">

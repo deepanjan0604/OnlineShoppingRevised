@@ -55,6 +55,19 @@ font-family: 'Spinnaker', sans-serif;
   opacity: 1;
   right: 0;
 }
+.cancelbutton{
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #504B4B;
+  border: none;
+  color: #000000;
+  text-align: center;
+  font-size: 16px;
+  padding: 7px;
+  width: 80px;
+ margin: 5px;
+  transition-duration: 0.2s;
+}
 .savebutton{
   display: inline-block;
   border-radius: 4px;
@@ -104,14 +117,15 @@ font-family: 'Spinnaker', sans-serif;
   <th style="text-align:right" class="col-md-6">Price(in Rs.)</th>
  </tr>
  
+ 
 
   <tr ng-repeat="item in cartitems">
-    <td ><div class="col-md-4"><img height="150" width="150" ng-src="{{item.product.image}}"></div>
+    <td ><div class="col-md-0"><img height="150" width="150" ng-src="{{item.product.image}}"></div>
 
-  <tr ng-repeat="cart in cart">
-    <td><div class="col-md-4"><img ng-src="{{image.imageUrl}}"></div>
+  
+    <td><div class="col-md-0"><img ng-src="{{image.imageUrl}}"></div>
 
-    <div class="col-md-offset-5">
+    <div class="col-md-offset-0">
 
    
     <a href="#"  ><b> Product Name: </b> {{item.product.productName}}</a><br>
@@ -123,34 +137,32 @@ font-family: 'Spinnaker', sans-serif;
      <a ng-hide="show" href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a>
 
     <a href="#"><b>{{image.name}}</b></a><br>
-    <a   ng-repeat="cartitem in cart.cartitem" ><b> Product Name: </b> {{cartitem.product.productName}}</a><br>
-    
-    
-    <p ng-hide="show" ng-repeat="cartitem in cart.cartitem"> <b>Quantity: </b>{{cartitem.quantity}}<br>
-    
-    
-     <a href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small></a></p>
+  
 <br>
 
+</div>
 <div ng-show="show" >
     <input type="number"  ng-model="item.quantity" min="1" max="{{item.product.quantity}}"  />
+
 <div ng-show="show">
 
-    <input type="number" ng-model="image.quantity" min="1" value="image.quantity" />
-    <br>
+    <!-- <input type="number" ng-model="image.quantity" min="1" value="image.quantity" /> -->
     <button class="savebutton" ng-click="show=!show;changeQuantity(item)">Save</button>
-    <button class="btn btn-default" ng-click="show=!show">Cancel</button>
+    <button class="savebutton" ng-click="show=!show">Cancel</button>
+
 </div>
 
+
    </td>
+
      <td style="text-align:right">Rs.{{item.initialprice}}</td>
-     <td ng-repeat="cartitem in cart.cartitem" 
-    style="text-align:right">Rs.{{cartitem.product.productPrice}}</td>
+
+   
+
     
     
     
-    
-  </tr>
+  
   
 </table>
  
@@ -199,20 +211,56 @@ font-family: 'Spinnaker', sans-serif;
           <h4 class="modal-title">Add a new Shipping Address</h4>
         </div>
         <div class="modal-body">
-           Address Line1: <input type="text" class="form-control"
-				ng-model="shippingAddress.address1"/><br /> 
-				
-		Address Line2: <input
-				type="text"  class="form-control" ng-model="shippingAddress.address2"/><br />
-				Phone: <input type="text" class="form-control"
-				ng-model="shippingAddress.phone"/><br>
-		City: <input type="text" class="form-control"
-				ng-model="shippingAddress.city"/><br /> 
-				
-			State: <input
-				type="text" class="form-control" ng-model="shippingAddress.state"/><br />
-			PinCode: <input type="text"  class="form-control"
-				ng-model="shippingAddress.pin"/><br /> 
+           <form  name="form1"  novalidate>
+               Address Line1: <input type="text" class="form-control" name="addressline1"
+               ng-model="shippingAddress.address1" ng-required="true"/>
+               <span style="color:red" ng-show="form1.addressline1.$dirty && 
+               form1.addressline1.$error.required"> Address Line1  is Required!</span><br /> 
+               
+               Address Line2: <input
+               type="text" name="addressline2" class="form-control" ng-model="shippingAddress.address2" ng-required="true"/><br />
+               <span style="color:red" ng-show="form1.addressline2.$dirty && 
+               form1.addressline2.$error.required"> Address Line 2  is Required!</span><br /> 
+               
+               Phone: <input type="text" class="form-control" name="phone"
+               ng-model="shippingAddress.phone" 
+               ng-pattern="/^[0-9]{1,7}$/"  ng-required="true" /><br>
+               
+               <span style="color:red "
+               ng-show="form1.phone.$dirty && form1.phone.$error.required ">Phone number is Required
+             </span>
+             <span style="color:red" 
+             ng-show=" form1.phone.$error.pattern">Not a valid phone number! ONLY NUMBERS ALLOWED</span> 
+             
+             
+             
+             City: <input type="text" name="city"class="form-control"
+             ng-model="shippingAddress.city" ng-required="true" />
+             <span style="color:red" ng-show="form1.city.$dirty && 
+             form1.city.$error.required"> city is Required!
+           </span><br /> <br /> 
+           
+           
+           
+           State:<select class="form-control" ng-model="shippingAddress.state">
+           <!--    <option><-----Select-----></option> -->
+           <option  ng-repeat="cat in statevat" value="{{cat.state}}">{{cat.state}}
+           </option>
+         </select> 
+         <br><br>
+     
+      
+      
+      
+      PinCode: <input type="text" name="pincode" ng-pattern="/^[0-9]{1,7}$/" class="form-control"
+      ng-model="shippingAddress.pin"/><br /> 
+      
+      <span style="color:red "
+      ng-show="form1.pincode.$dirty && form1.pincode.$error.required ">Phone number is Required
+    </span>
+    <span style="color:red" 
+    ng-show=" form1.pincode.$error.pattern">Not a valid phone number! ONLY NUMBERS ALLOWED</span> 
+    </form>
 		
         </div>
         <div class="modal-footer">
@@ -236,8 +284,9 @@ Taxes(VAT) : {{tax.vat}}
 <hr>
 <h3>Total : {{tax.finalprice}} </h3>
  <br>
-<button class="button" style="margin:auto;
-  display:block;" class="btn btn-primary" ng-click="">Place the Order</button>	
+ <a href="#orderconfirm">Place order
+<!-- <button class="button" style="margin:auto;
+  display:block;" class="btn btn-primary" ng-click="">Place the Order</button> -->	</a>
   <br> 
 
 </div>

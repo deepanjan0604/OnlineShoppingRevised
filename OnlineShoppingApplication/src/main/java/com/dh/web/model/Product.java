@@ -1,4 +1,4 @@
-package com.dh.webtest.model;
+package com.dh.web.model;
 
 import java.util.List;
 
