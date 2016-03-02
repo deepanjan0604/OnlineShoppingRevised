@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.dh.web.model.ShippingAddress;
 //import com.dh.webtest.repository.StateVatRepository2;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mysql.jdbc.Blob;
@@ -59,9 +59,22 @@ public class Cart{
 	@JsonIgnore
 	Customer customer;
 
+
+	@OneToOne(fetch = FetchType.EAGER)
+	//@JsonIgnore
+	ShippingAddress shippingaddress;
+
 	
-	/*@Autowired
-	StateVatRepository2 stateVatRepository2;*/
+	
+	public ShippingAddress getShippingaddress() {
+		return shippingaddress;
+	}
+
+
+	public void setShippingaddress(ShippingAddress shippingaddress) {
+		this.shippingaddress = shippingaddress;
+	}
+	
 	
 	public int getCartId() {
 		return cartId;

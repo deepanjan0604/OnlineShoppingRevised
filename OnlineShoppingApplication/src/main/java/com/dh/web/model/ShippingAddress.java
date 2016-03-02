@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.dh.web.model.Cart;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -50,6 +51,9 @@ public class ShippingAddress {
 	@JsonIgnore
 	Customer customer;
 	
+	@JsonIgnore
+	@OneToOne(mappedBy = "shippingaddress", orphanRemoval = true)
+	Cart cart;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonIgnore

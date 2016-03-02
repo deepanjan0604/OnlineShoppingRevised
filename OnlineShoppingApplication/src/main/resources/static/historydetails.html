@@ -1,0 +1,193 @@
+<html>
+  <style>
+    body{
+font-family: 'Spinnaker', sans-serif;
+
+    }
+   th, tr, td{
+     padding:12px;
+   } 
+   a{
+     color: #595959;
+     text-decoration: none;
+   }
+   a:hover{
+    color: black;
+     text-decoration: none;
+   }
+   .button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #504B4B;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 17px;
+  padding: 8px;
+  width: 280px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '�';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.savebutton{
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #504B4B;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 16px;
+  padding: 7px;
+  width: 80px;
+ margin: 5px;
+  transition-duration: 0.2s;
+}
+.savebutton:hover{
+   background-color: #737373;
+   
+}
+#ordersummary{
+    background-color: #e6e6e6;
+      font-size: 16px;
+      margin-bottom: 30px;
+}
+.btn{
+  padding:8px;
+  font-size: 16px;
+  margin: 5px;
+  width : 80px;
+ margin-bottom: 8px;
+}
+ .button:hover{
+      background-color:  #595959
+;
+ }  
+
+    </style>
+    
+<body ng-controller="historydetailsctrl">
+  <div class="row">
+<div >
+  <h3 style="float:left"> History Details</h3>
+
+</div>
+<table  class="table" class="col-md-12">
+ <tr>
+  <th class="col-md-6">Products</th>
+ 
+  <th style="text-align:right" class="col-md-6">Price(in Rs.)</th>
+ </tr>
+ 
+ 
+      <div  class="caption">
+       
+       
+
+    
+<tr ng-repeat="orderdetails in orders">
+    <td><div class="col-md-4"><img ng-src="{{orderdetails.imageUrl}}"></div>
+
+    <div class="col-md-offset-5">
+
+   
+   <a href="#"  ><b> Product Name: </b> {{orderdetails.productName}}</a><br>
+    
+    
+    <p ng-hide="show" > <b>Quantity: </b>{{orderdetails.quantity}}<br></p>
+    
+    
+  
+    <a href="#"><b>{{image.name}}</b></a><br>
+   
+
+  <td style="text-align:right">Rs.{{orderdetails.price}}</td>
+
+   
+
+
+
+   </td>
+
+ 
+    
+  </tr>
+  
+</table>
+ 
+  </div>
+
+  </div>
+
+<!-- <h2> Shipping Adresss</h2>
+<table class="table">
+<tr>
+ <th class="col-md-4">Address</th>
+					<th class="col-md-2" >Mobile</th>
+					<th class="col-md-2">City</th>
+					<th class="col-md-2">State</th>
+					<th class="col-md-2">Pin Code</th>
+					
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="sa in shippingaddresses">
+
+					<td>{{sa.address1}},{{sa.address2}}</td>
+					<td>{{sa.phone}}</td>
+          <td>{{sa.city}}</td>
+					<td>{{sa.state}}</td>
+					<td>{{sa.pin}}</td>
+       
+				
+				
+			</tbody>
+		</table>
+    
+    
+    <br><br> -->
+    
+</div>
+<br>
+
+ <!-- <div id="ordersummary" class="col-md-5 col-md-offset-3">
+<h2>Order Details</h2>
+
+Total cost : {{cart.totalcost}}<br>
+Tax(CST@12.5%)   :  {{tax.cst}} <br>
+Taxes(VAT) : {{tax.vat}}
+<hr>
+<h3>Total : {{tax.finalprice}} </h3>
+ <br>
+
+</div>  -->
+  <span style="display:block; height:200px;"></span>
+
+
+</body>
+</html>

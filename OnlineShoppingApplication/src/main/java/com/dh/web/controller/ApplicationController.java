@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +46,6 @@ import com.dh.web.repository.CategoryRepository;
 import com.dh.web.repository.CustomerRepository;
 import com.dh.web.repository.OrderDetailRepository;
 import com.dh.web.repository.OrderRepository;
-import com.dh.web.repository.ProductImageRepository;
 import com.dh.web.repository.ProductRepository;
 import com.dh.web.repository.ShippingAddressRepository;
 import com.dh.web.repository.StateVatRepository;
@@ -84,10 +86,9 @@ StateVatRepository stateVatRepository ;
 @Autowired
 CategoryRepository categoryRepository ;
 
-@Autowired
-ProductImageRepository productImageRepository;
 
-@RequestMapping("/log")
+
+@RequestMapping("/public/log")
 public HashMap<String, String> getLogin() {
 HashMap<String, String> returnParams = new HashMap<String, String>();
 
@@ -119,68 +120,115 @@ return returnParams;
 
 
 
-@RequestMapping("/brands")
+@RequestMapping("/public/brands")
 public List<Brand> getBrands() {
   return (List<Brand>) brandRepository.findAll();
 } 
 
 
-@RequestMapping("/cart")
+@RequestMapping("/user/cart")
 
 public Cart getCart() {
+	
 	Customer customer = getCustomer();
+	try
+	{
 	int cartid = customer.getCart().getCartId();
-  return cartRepository.findOne(cartid);
-} 
+	return cartRepository.findOne(cartid);
 
-@RequestMapping("/cart/{cartId}")
+	} catch (Exception e) {
+		return null;
+	}
+
+	}
+
+
+
+@RequestMapping("/user/cart/{cartId}")
 public Cart  getCart (@PathVariable("cartId") int cartId){
 
 return  cartRepository.findOne(cartId);
 }
 
-@RequestMapping("/cartitems")
+@RequestMapping("/user/cartitems")
 public List<CartItem> getCartItem() {
   return (List<CartItem>) cartItemRepository.findAll();
 }
 
 
-@RequestMapping("/customers")
+@RequestMapping("/user/customers")
 public List<Customer> getCustomers() {
   
   return (List<Customer>) customerRepository.findAll();
 } 
 
-@RequestMapping("/customers/one")
+@RequestMapping("/user/customers/one")
 public Customer  getCustomer (){
   String userName = SecurityContextHolder.getContext().getAuthentication().getName();
   return  customerRepository.findByuserName(userName);
 }
 
-@RequestMapping("/orders")
-public List<Order> getOrder() {
-  return (List<Order>) orderRepository.findAll();
+@RequestMapping("/admin/orders")
+public List<Customer> getOrder() {
+	List<Customer> cust= new ArrayList<Customer>(); 
+	List<Customer> customers = customerRepository.findAll();
+	Iterator<Customer> it = customers.iterator();		
+	while(it.hasNext()){		
+		Customer customer= (Customer)it.next();
+		boolean status = customer.getOrder().isEmpty();
+		if(status !=true)
+		{
+	  cust.add(customer);
+					
+		}
+		}
+	return cust;
+	
+	}
+
+@RequestMapping("/user/myorders")
+public List<Order> getmyOrders() {
+	List<Order> order = getCustomer().getOrder();
+  return (List<Order>) order;
 } 
 
 
-@RequestMapping("/orderdetails")
-public List<OrderDetail> getOrderDetail() {
-  return (List<OrderDetail>) orderDetailRepository.findAll();
+@RequestMapping("/public/order/{orderId}")
+public List<OrderDetail> getOrderDetail(@PathVariable("orderId") int orderId) {
+	Order order = orderRepository.findOne(orderId);
+	
+  return order.getOrderdetail();
 }
 
-@RequestMapping("/products")
+/*@RequestMapping("/public/products")
 public List<Product> getProducts() {
   return (List<Product>) productRepository.findAll();
+}*/
+
+@RequestMapping("/public/products")
+public Page<Product> getProducts(@RequestBody HashMap<String , Integer> map ) {
+	/*EntityManagerFactory emf=Persistence.
+			createEntityManagerFactory("jpa");
+			    EntityManager em=emf.createEntityManager();
+	String sql = "SELECT COUNT(*) FROM Products";
+	Query q = em.createQuery(sql);
+	int count = (int)q.getSingleResult();*/
+	
+	/*int pageCount= Integer.parseInt(map.get("pageCount").toString());
+	int pageSize=Integer.parseInt(map.get("pageSize").toString());*/
+	int pageCount= map.get("pageCount");
+	int pageSize=map.get("pageSize");
+	PageRequest pageRequest=new PageRequest(pageCount,pageSize);
+  return (Page<Product>) productRepository.findAll(pageRequest);
 }
 
-
-@RequestMapping("/products/brand/{brandId}")
+@RequestMapping("/public/products/brand/{brandId}")
 public List<Product> getProductByBrand(@PathVariable("brandId") int brandId) {
 return (List<Product>) productRepository.findByBrandBrandId(brandId);
 }
 
 
-@RequestMapping("/products/category/{categoryId}")
+@RequestMapping("/public/products/category/{categoryId}")
 public List<Product> getProductByCategory(@PathVariable("categoryId") int categoryId) {
 return (List<Product>) productRepository.findByCategoryCategoryId(categoryId);
 }
@@ -188,15 +236,22 @@ return (List<Product>) productRepository.findByCategoryCategoryId(categoryId);
 
 
 
-@RequestMapping("/products/{productId}")
-public Product  getProduct (@PathVariable("productId") int productId){
+@RequestMapping("public/product/{productId}")
+public Product  getProduct(@PathVariable("productId") int productId){
   return  productRepository.findOne(productId);
+}
+
+
+@RequestMapping("/public/products/{productName}")
+public List<Product>  getProductbyName (@PathVariable("productName") String productName){
+  return  productRepository.findByProductName(productName);
 }
 
 
 
 
-@RequestMapping("/viewproducts")
+
+@RequestMapping("/public/viewproducts")
 public List<Product> getviewProducts() {
   return (List<Product>) productRepository.findAll();
 } 
@@ -204,20 +259,20 @@ public List<Product> getviewProducts() {
 
 
 
-@RequestMapping("/categories")
+@RequestMapping("/public/categories")
 public List<Category> getCategories() {
   return (List<Category>) categoryRepository.findAll();
 } 
 
 
 
-@RequestMapping("/shippingaddress/{shippingId}")
+@RequestMapping("/user/shippingaddress/{shippingId}")
 public ShippingAddress getShippingAddress(@PathVariable("shippingId") int shippingId) {
   return  shippingAddressRepository2.findOne(shippingId);
 }
 
 
-@RequestMapping("/shippingaddresses")
+@RequestMapping("/user/shippingaddresses")
 public List<ShippingAddress> getShippingAddress() {
   return (List<ShippingAddress>) shippingAddressRepository.findAll();
 }
@@ -225,7 +280,7 @@ public List<ShippingAddress> getShippingAddress() {
 
 
 
-@RequestMapping("/shippingaddresses/one")
+@RequestMapping("/user/shippingaddresses/one")
 public List<ShippingAddress> getShippingAddressOne() {
   String userName = SecurityContextHolder.getContext().getAuthentication().getName();
   Customer customer=  customerRepository.findByuserName(userName);
@@ -237,14 +292,14 @@ public List<ShippingAddress> getShippingAddressOne() {
 
 
 
-@RequestMapping("/displaystate")
+@RequestMapping("/user/displaystate")
 public List<StateVat> getStateVat() {
   return (List<StateVat>) stateVatRepository.findAll();
 } 
 
 
 
-@RequestMapping("/savecustomer")
+@RequestMapping("/public/savecustomer")
 public HashMap<String, Object> savecustomer(@RequestBody Customer customer) {
   HashMap<String, Object> returnParams = new HashMap<String, Object>(); 
   try {
@@ -262,7 +317,7 @@ public HashMap<String, Object> savecustomer(@RequestBody Customer customer) {
 
 
 
-@RequestMapping("/addcategory")
+@RequestMapping("/admin/addcategory")
 public HashMap<String, Object> category(@RequestBody Category category) {
   HashMap<String, Object> returnParams = new HashMap<String, Object>();
   
@@ -281,7 +336,7 @@ public HashMap<String, Object> category(@RequestBody Category category) {
 
 
 
-@RequestMapping("/addbrand")
+@RequestMapping("/admin/addbrand")
 public HashMap<String, Object> category(@RequestBody Brand brand) {
   HashMap<String, Object> returnParams = new HashMap<String, Object>(); 
   try {
@@ -299,7 +354,7 @@ public HashMap<String, Object> category(@RequestBody Brand brand) {
 
 
 
-@RequestMapping("/addshippingaddress")
+@RequestMapping("/user/addshippingaddress")
 public HashMap<String, Object> addShippingaddress(@RequestBody ShippingAddress shippingaddress) {
   HashMap<String, Object> returnParams = new HashMap<String, Object>();
   try{
@@ -327,7 +382,7 @@ public HashMap<String, Object> addShippingaddress(@RequestBody ShippingAddress s
 
 
 
-@RequestMapping("/editshippingaddress")
+@RequestMapping("/user/editshippingaddress")
 public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress shippingaddress) {
   HashMap<String, Object> returnParams = new HashMap<String, Object>();
   try{
@@ -392,7 +447,7 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
   }*/
 
 
-  @RequestMapping("/saveproduct")
+  @RequestMapping("/admin/saveproduct")
   public HashMap<String, Object> saveproduct(@RequestBody Product product) throws IOException {
     HashMap<String, Object> returnParams = new HashMap<String, Object>();
     
@@ -412,7 +467,7 @@ public HashMap<String, Object> editShippingaddress(@RequestBody ShippingAddress 
   
   
   
-  @RequestMapping("/savedetails")
+  @RequestMapping("/user/savedetails")
   public HashMap<String, Object> savedetails(@RequestBody Customer customer) {
     HashMap<String, Object> returnParams = new HashMap<String, Object>();
     
@@ -499,7 +554,7 @@ return returnParams;
 
 
 
-@RequestMapping("/cartcheck")		
+@RequestMapping("/user/cartcheck")		
 public HashMap<String, String> cartCheck() {		
 HashMap<String, String> returnParams = new HashMap<String, String>();		
 Customer customer= getCustomer();		
@@ -513,7 +568,7 @@ return returnParams;
 		
 		
 		
-@RequestMapping("/addcartitem")		
+@RequestMapping("/user/addcartitem")		
 public HashMap<String, Object> addCartitem(@RequestBody CartItem cartitem) {		
 	HashMap<String, Object> returnParams = new HashMap<String, Object>();		
 try		
@@ -550,7 +605,7 @@ return returnParams;
 		
 		
 		
-@RequestMapping("/addcart")		
+@RequestMapping("/user/addcart")		
 public HashMap<String, Object> addCart(@RequestBody Cart cart) {		
 	HashMap<String, Object> returnParams = new HashMap<String, Object>();		
 try		
@@ -580,11 +635,37 @@ return returnParams;
 
 
 
-@RequestMapping("/calculatevat")		
-public HashMap<String, Double> calculateVat(@RequestBody ShippingAddress shippingaddress) {		
+@RequestMapping("/user/calculatevat")		
+public HashMap<String, Double> setShipping(@RequestBody ShippingAddress shippingaddress) {		
 	HashMap<String, Double> returnParams = new HashMap<String, Double>();		
-//	Cart cart=new Cart();		
-	Cart cart = getCustomer().getCart();		
+
+	Cart cart = getCustomer().getCart();
+	
+	cart.setShippingaddress(shippingaddress);
+	cartRepository.save(cart);
+	
+	returnParams= calculateVat();
+	return returnParams;		
+			
+}		
+
+@RequestMapping("/user/getvat")		
+public HashMap<String, Double> calculateVat() {	
+	HashMap<String, Double> returnParams = new HashMap<String, Double>();		
+if(getCustomer().getCart()!=null)
+{
+	Cart cart = getCustomer().getCart();
+
+	if(cart.getShippingaddress()==null)
+	{
+		returnParams.put("status", 0.0);
+		
+	}
+	
+	if(cart.getShippingaddress()!=null)
+	{
+	ShippingAddress shippingaddress = cart.getShippingaddress();
+	
 	float total=cart.getTotalcost();		
 	String state = shippingaddress.getState();		
 StateVat statevat= stateVatRepository.findBystate(state);  		
@@ -594,8 +675,93 @@ StateVat country = stateVatRepository.findBystate("india");
 	double finalprice = total+cst+vat;		
 	returnParams.put("cst", cst);		
 	returnParams.put("vat", vat);		
-	returnParams.put("finalprice", finalprice);		
-	return returnParams;					
-}		
+	returnParams.put("finalprice", finalprice);	
+	}
 }
+	return returnParams;	
+	
+}
+
+@RequestMapping("/user/placetheorder")		
+public Object placeOrder() {
+	HashMap<String, Object> returnStatus = new HashMap<String, Object>();		
+
+	
+	try
+	{
+		Order order = new Order();
+	 Cart cart = getCustomer().getCart();
+	List<CartItem> cartitems = cart.getCartitem();
+	Iterator<CartItem> it = cartitems.iterator();		
+	while(it.hasNext()){		
+		CartItem cartitem= (CartItem)it.next();		
+		Product product = cartitem.getProduct();
+		int productid = product.getProductId();
+		String productname = product.getProductName();
+		int quantity = cartitem.getQuantity();
+	int productquantity = product.getQuantity();
+	int updatedquantity = productquantity-quantity;
+	product.setQuantity(updatedquantity);
+	productRepository.save(product);
+		float initialprice = cartitem.getInitialprice();
+		OrderDetail orderdetail = new OrderDetail();
+		orderdetail.setProductId(productid);
+		orderdetail.setProductName(productname);
+		orderdetail.setQuantity(quantity);
+		orderdetail.setPrice(initialprice);
+		orderRepository.save(order);
+
+		orderdetail.setOrder(order);
+
+		orderDetailRepository.save(orderdetail);
+
+	}		
+	HashMap<String, Double> returnParams = calculateVat();
+	order.setShippingAddress(cart.getShippingaddress());
+	order.setCustomer(getCustomer());
+	float totalcost = cart.getTotalcost();
+	order.setCost(totalcost);
+	Double cst = returnParams.get("cst");
+	Double vat = returnParams.get("vat");
+	float Tax = (float) (cst+vat);
+	order.setTax(Tax);
+	Double finalprice = returnParams.get("finalprice");
+	float finalcost = finalprice.floatValue();
+order.setTotalCost(finalcost);
+
+	orderRepository.save(order);
+	cartRepository.delete(cart);
+	returnStatus.put("status", true);
+	// status = "order placed";
+
+	} catch (Exception e){
+		 //status = "notallowed";
+			returnStatus.put("status", false);
+
+	}
+	return returnStatus;
+	
+}
+
+/*@RequestMapping("/user/removecartitem/{cartitemId}")		
+public void removeCartitem(@PathVariable("cartitemId") int cartitemId) {	
+	//HashMap<String, Double> returnParams = new HashMap<String, Double>();
+	cartItemRepository.delete(cartitemId);
+	
+	return;
+}*/
+
+@RequestMapping("/user/removecartitem")		
+public void removeCartitem(@RequestBody CartItem cartitem) {	
+	//HashMap<String, Double> returnParams = new HashMap<String, Double>();
+	int cartitemId = cartitem.getCartitemId();
+	cartItemRepository.delete(cartitemId);
+	
+	return;
+}
+
+}
+	
+
+
  

@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body ng-controller="adminhistoryctrl">
+<h1>{{title}}</h1>
+
+
+
+<table class="table table-bordered">
+<tr>
+
+					
+					<th class="col-md-2">OrderId</th>
+					<th class="col-md-2">CustomerName</th>
+					<th class="col-md-2">Total Cost</th>
+					
+					<th class="col-md-2">OrderDetails</th>
+					
+				</tr>
+		<tbody ng-repeat="customer in customerorders">
+<tr ng-repeat="orders in customer.order">
+			 
+          <td >{{orders.orderId}}</td>
+          <td>{{customer.firstName}} {{customer.lastName}}</td>
+                 <td >{{orders.totalCost}}</td>
+       
+             
+				<td><a href="#historydetails/{{orders.orderId}}" >Order Details</a> </td>
+				
+				</tr>
+				</tbody>
+			</thead>
+</table>
+
+
+</body>
+</html>

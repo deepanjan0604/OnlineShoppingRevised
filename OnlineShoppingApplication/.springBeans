@@ -7,9 +7,9 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.dh.web.OnlineShoppingApplication</config>
 	</configs>
 	<autoconfigs>
+		<config>java:OnlineShoppingApplication</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

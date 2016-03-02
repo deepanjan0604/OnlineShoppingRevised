@@ -91,11 +91,11 @@ font-family: 'Spinnaker', sans-serif;
 
     </style>
     
-<body ng-controller="orderconfirmctrl">
+<body ng-controller="orderctrl">
   <div class="row">
 <div >
   <h3 style="float:left"> Order Details</h3>
- <!--  <h4 style="float:right"><a  href="#e1">Continue Shopping></a></h4> -->
+
 </div>
 <table  class="table" class="col-md-12">
  <tr>
@@ -105,49 +105,36 @@ font-family: 'Spinnaker', sans-serif;
  </tr>
  
  
+      <div  class="caption">
+       
+       
 
-  <tr ng-repeat="item in cartitems">
-    <td ><div class="col-md-4"><img height="150" width="150" ng-src="{{item.product.image}}"></div>
-
-  <tr ng-repeat="cart in cart">
+    
+<tr ng-repeat="orderdetails in orderdetails">
     <td><div class="col-md-4"><img ng-src="{{image.imageUrl}}"></div>
 
     <div class="col-md-offset-5">
 
    
-    <a href="#"  ><b> Product Name: </b> {{item.product.productName}}</a><br>
+   <a href="#"  ><b> Product Name: </b> {{orderdetails.productName}}</a><br>
     
     
-    <p ng-hide="show" > <b>Quantity: </b>{{item.quantity}}<br></p>
+    <p ng-hide="show" > <b>Quantity: </b>{{orderdetails.quantity}}<br></p>
     
     
-   <!--   <a ng-hide="show" href="" ng-click="show=true"> Edit <small><span class="glyphicon glyphicon-pencil"></span></small> --></a>
-
+  
     <a href="#"><b>{{image.name}}</b></a><br>
    
 
+  <td style="text-align:right">Rs.{{orderdetails.price}}</td>
 
-<!-- <div ng-show="show" >
-    <input type="number"  ng-model="item.quantity" min="1" max="{{item.product.quantity}}"  />
+   
 
-<div ng-show="show">
-
-    <input type="number" ng-model="image.quantity" min="1" value="image.quantity" />
-
-    <br>
-    
-</div> -->
 
 
    </td>
 
-     <td style="text-align:right">Rs.{{item.initialprice}}</td>
-
-     <td ng-repeat="cartitem in cart.cartitem" 
-    style="text-align:right">Rs.{{cartitem.product.productPrice}}</td>
-
-    
-    
+ 
     
   </tr>
   
@@ -160,8 +147,7 @@ font-family: 'Spinnaker', sans-serif;
 <h2> Shipping Adresss</h2>
 <table class="table">
 <tr>
-<!--   <th ></th>
- -->  <th class="col-md-4">Address</th>
+ <th class="col-md-4">Address</th>
 					<th class="col-md-2" >Mobile</th>
 					<th class="col-md-2">City</th>
 					<th class="col-md-2">State</th>
@@ -171,7 +157,7 @@ font-family: 'Spinnaker', sans-serif;
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="sa in shippingAddresses">
+				<tr ng-repeat="sa in shippingaddresses">
 
 					<td>{{sa.address1}},{{sa.address2}}</td>
 					<td>{{sa.phone}}</td>
@@ -189,8 +175,9 @@ font-family: 'Spinnaker', sans-serif;
     
 </div>
 <br>
-<!-- <div id="ordersummary" class="col-md-5 col-md-offset-3">
-<h2>Order Summary</h2>
+
+ <div id="ordersummary" class="col-md-5 col-md-offset-3">
+<h2>Order Details</h2>
 
 Total cost : {{cart.totalcost}}<br>
 Tax(CST@12.5%)   :  {{tax.cst}} <br>
@@ -199,7 +186,7 @@ Taxes(VAT) : {{tax.vat}}
 <h3>Total : {{tax.finalprice}} </h3>
  <br>
 
-</div> -->
+</div> 
   <span style="display:block; height:200px;"></span>
 
 

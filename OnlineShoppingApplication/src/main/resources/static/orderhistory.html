@@ -4,7 +4,32 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
+<body  ng-controller="historyctrl">
+<h1>{{title}}</h1>
+
+<table class="table table-bordered">
+<tr >
+ 
+  <th class="col-md-1">Order Id </th>
+					
+					<th class="col-md-2">Total Cost</th>
+										<th class="col-md-2">Tax Amount</th>
+					
+					<th class="col-md-2">Final Price</th>
+<th class="col-md-2" >View Details</th>
+				</tr>
+				
+		<tr ng-repeat="order in orders">		 
+          <td>{{order.orderId}}</td>
+          <td>{{order.cost}}</td>
+          <td>{{order.tax}}</td>
+              <td>{{order.totalCost}}</td>
+				<td><a href="#historydetails/{{order.orderId}}" >View Details</a> </td>
+				</tr>
+			</thead>
+</table>
+
+
 
 </body>
 </html>

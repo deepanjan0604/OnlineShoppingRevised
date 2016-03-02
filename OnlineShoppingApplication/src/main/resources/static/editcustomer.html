@@ -67,6 +67,7 @@
                     <span style="color:red" ng-show="form1.lastname.$dirty && form1.lastname.$error.lastname">Not a valid name!</span>  
                   </div>
                 </div>
+
              <!--   First Name: <input type="text" name="firstname" class="form-control"
 				ng-model="edit.firstName"  ng-required="true"/>
 	<span style="color:red" ng-show="form1.firstname.$dirty && form1.firstname.$error.required">firstname is Required
@@ -105,18 +106,16 @@
 
 
 
-                  <input  class="btn btn-primary"
-                  value="save"  ng-click="savedetails()"/> 
                 </form>
               </div>
             </div>
           </div>
         </div>
         
-        <h2> Ship To </h2>
+        <h2> Shipping Addresses </h2>
         <table class="table">
           <tr>
-            <th ></th>
+            
             <th class="col-md-4">Address</th>
             <th class="col-md-2" >Mobile</th>
             <th class="col-md-2">City</th>
@@ -128,7 +127,7 @@
         </thead>
       <tbody>
         <tr ng-repeat="sa in shippingaddresses">
-          <td><input type="checkbox" ng-model="shippingAddress.id" />
+         <!--  <td><input type="checkbox" ng-model="shippingAddress.id" /> -->
           <td>{{sa.address1}},{{sa.address2}}</td>
           <td>{{sa.phone}}</td>
           <td>{{sa.city}}</td>
@@ -144,6 +143,7 @@
       <button   data-toggle="modal" data-target="#myModal1" class="button" style="vertical-align:middle"><span>Add new Shipping Address </span></button>
       <br><br>
       
+                         <input type="button" class="button" value="save"  ng-click="savedetails()"/> 
         
         <div class="modal fade" id="myModal1" role="dialog">
           <div class="modal-dialog">
@@ -210,6 +210,7 @@
     </span>
     <span style="color:red" 
     ng-show=" form1.pincode.$error.pattern">Not a valid pin! ONLY NUMBERS ALLOWED</span> 
+
     </form>
   </div>
   <div class="modal-footer">

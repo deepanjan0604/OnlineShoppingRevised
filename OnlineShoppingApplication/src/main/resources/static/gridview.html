@@ -71,60 +71,19 @@ a{
  -->
 <body>
 <div ng-controller="gridctrl">
-  <!--  <div class="panel panel-default"  ng-repeat="image in images">
-    <div class="panel-body">  
-   <img  ng-src="{{image.imageUrl}}" style="float:left;width:100px;height:100px;">
-   <h4 style="margin-left:120px"> {{image.name}}</h4>
-   <p style="margin-left:120px">Rs.{{image.price}}</p>
-   <input type="button" value="View More" style="float:right"></button>
-   <input type="button" value="View More" style="float:right"></button>
-  </div>
-</div> -->
+
+<div class="rightalign">
+  <label>Search:
+  <input ng-model="searchKeyword"><span class="glyphicon glyphicon-search"></span>
+</label><br><br></div>
+
  
 <div class="row" > 
   
-<!--   <table class="table table-bordered ">
-      <thead>
-        <tr>
-        <td></td>
-          <td>Product Name</td>
-          <td>Product Price</td>
-          
-        </tr>
-      </thead>
-      <tbody>
 
-        < <tr ng-repeat="product in products">
-        <td><img ng-src="{{product.image}}"></img></td>
-          <td class="centeralign">{{product.productName}}</td>
-          
-          <td class="centeralign">Rs.{{product.productPrice}}</td>
-    <td ng-hide="authenticatedadd"><a href="#login"  class="button" role="button">Add to cart</a></td>
-    <td ng-show="user"><a  href="#" class="button" role="button">Add to cart</a></td>
-      <td ng-show="admin">  <a   style="float:right" href="#editproduct/{{product.productId}}" class="button" role="button">Edit</a>
-          
-    </td>
-  
-        </tr> 
-      </tbody>
-    </table> -->
-    
-    
-    
-<!--    <div class="rightalign">
-    <ul class="pagination">
-<li><a href="" ng-click="pagination.prevPage()">&laquo;</a></li>
-  <li ng-repeat="n in [] | range: pagination.numPages" ng-class="{active: n == pagination.page}">
-  <a href="" ng-click="pagination.toPageId(n)">{{n + 1}}</a>
-  </li>
-  <li><a href="" ng-click="pagination.nextPage()">&raquo;</a></li> 
 
-</ul>
-  </div> -->
   
-  
-  
-  <div  class="col-sm-6 col-md-4" ng-repeat="product in products">
+  <div  class="col-sm-6 col-md-4" ng-repeat="product in products | filter: searchKeyword">
   <a href="#view/{{image.id}}"> 
     <div style="height:250px" class="thumbnail">
       <img  ng-src="{{product.image}}" alt="{{image.name}}"></div>
@@ -137,18 +96,23 @@ a{
         <a   style="float:right" href="#editproduct/{{product.productId}}" ng-show="admin" class="btn btn-info" role="button">Edit</a> 
         </h4>
        
-        
-        
-
        
-       
-       <!--  <a href="#" class="btn btn-default" role="button">Edit</a>
-        <a ng-show="user" href="#" class="button" role="button">Add to cart</a>
-       <a ng-show="admin"  style="float:right" href="#editproduct" class="button" role="button">Edit</a> -->
-         
      
     </div>
      </div>
+     
+     
+     <div class="centeralign">
+    <ul class="pagination">
+   
+  <li><a href="" ng-click="prevPage()">&laquo;</a></li>
+ <li ng-repeat="n in page track by $index" >
+  <a ng-click="toPageId($index)">{{$index+1}}</a>
+  </li>
+  <li><a href="" ng-click="nextPage()">&raquo;</a></li>  
+
+</ul>
+  </div> 
   </div> 
   
 </body>

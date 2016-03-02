@@ -22,8 +22,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.httpBasic().and().authorizeRequests().antMatchers("/public/**").permitAll().antMatchers("/admin/**")
-				.access("hasRole('ADMIN')").and().logout().logoutSuccessUrl("/login")
+		http.httpBasic().and().authorizeRequests().antMatchers("/public/**").permitAll().antMatchers("/admin/**").hasAuthority("ADMIN")
+				.antMatchers("/user/**").hasAuthority("USER").and().logout().logoutSuccessUrl("/login")
 				.and().csrf().disable();
 	}
 
@@ -37,9 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authoritiesByUsernameQuery("select username, role from customers where username=?")
 				.rolePrefix("");
 
-		/*
-		auth.inMemoryAuthentication().withUser("admin").password("admin")
-		.roles("ADMIN", "USER");*/
+		
+		/*auth.inMemoryAuthentication().withUser("vyshnavi").password("vyshnavi")
+		.authorities("USER");*/
 	
 
 /*public String BcryptDecoder(String password){

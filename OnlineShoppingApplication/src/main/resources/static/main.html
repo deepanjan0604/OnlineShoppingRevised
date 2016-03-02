@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -151,9 +152,9 @@
 </style>
 </head>
 
-  
-   
-  <body ng-app="app" background="images/image1.jpg">
+<!--   background="images/image1.jpg
+ -->   
+  <body ng-app="app" ">
    
    <nav  class="navbar-fixed-top"  id="hormenu">
      <ul>
@@ -164,11 +165,19 @@
        <li ng-show="admin"><a href='#'>Order History</a></li> -->
        
 
+      <form class="navbar-form navbar-left" role="search">
+        <input ng-model="productname" type="text" class="form-control" placeholder="Search">
+  
+    <button type="submit" ng-click="search()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>  
+</form>
        <div class="rightalign">
       <li ng-show="admin" ><a href=''>hii!! {{response.name}} <span class="glyphicon glyphicon-menu-down" ></span> </a>
          <ul class="submenu">
          <li><a href='#addproducts'>Add products</a></li>
-       <li><a href='#'>Order History</a></li>
+       <li><a href='#adminhistory'>Order History</a></li>
+       
+       
+       
          <li ng-show="admin"><a href='' ng-click="logOut()">Logout</a></li>
          
          </ul></li>
@@ -176,7 +185,7 @@
          <ul class="submenu">
          <li><a href='#viewcustomer'>View my Profile</a></li>
          <li><a href='#editcustomer'>Edit my Profile</a></li>
-         <li><a href='#'>My Orders</a></li>
+         <li><a href='#history'>My Orders</a></li>
          <li ng-show="user"><a href='' ng-click="logOut()">Logout</a></li>
          
          </ul></li>
@@ -247,3 +256,243 @@
 
   </script>
   </html>
+  
+  
+  
+<!-- =======
+	<head>
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+       
+     <script src="app.js"></script>
+	<link href="animate.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Spinnaker' rel='stylesheet' type='text/css'>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
+	</head>
+	<style>
+    
+	 #vermenu .mainmenu{
+    padding: 70px 0 0 0;
+	height:100%;
+	position:fixed;
+	overflow-x:hidden;
+  	overflow-y:visible;
+	font-family: Raleway, sans-serif;
+ 
+	}
+ #vermenu ul {
+    list-style-type: none;
+    margin: 0;
+	padding:0;
+    width: 230px;
+    background-color: #404040;
+ 	font-size: 16px;
+}
+
+ #vermenu li a {
+    display: block;
+    color: white;
+    padding: 8px 0 8px 25px;
+    text-decoration: none;
+    transform: translateX(0px);
+    transition: 0.2s;
+}
+
+
+ #vermenu li a:hover {
+    /*background-color: #f2f2f2;
+    color: #555;*/
+    transform: translateX(6px);
+}
+ #vermenu .submenu a {
+  background-color: #e6e6e6;
+  color: #555;
+  font-size: 14px;
+ }
+
+ #vermenu .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+  transition: all linear 0.5s;
+   
+}
+
+ #vermenu .animate-show.ng-hide {
+  line-height: 20px;
+  opacity: 0;
+  padding: 20px 0px 20px 0px;
+}
+
+#hormenu  ul{
+ list-style-type: none;
+    margin: 0;
+    padding: 0px 0px 0px 0px ;
+    overflow: hidden;
+    background-color: 	 #404040;
+    font-family: Raleway, sans-serif;
+}
+#hormenu li{
+  float: left;
+  text-align: center;
+   
+}
+#hormenu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 20px 16px;
+    border-top: 0px;
+    text-decoration: none;
+    font-size: 16px;
+     transition:0.1s;
+}
+
+#hormenu li a:hover {
+    /*background-color: #f2f2f2;*/
+    /*opacity: 0.7;*/
+     border-top: 4px  solid #f2f2f2;
+    
+   
+}
+#hormenu li #brand {
+   border-top: 4px;
+  padding: 15px 45px 15px 30px;
+  font-size: 20px;
+  
+}
+#hormenu li:hover #brand {
+ color: #e6e6e6;
+}
+#header {
+  padding: 12px 15px 12px 15px;
+  font-size: 18px;
+  color: #f2f2f2;
+}
+#hormenu .rightalign{
+  float:right;
+ 
+}
+#hormenu .submenu{
+   overflow:hidden;
+  max-height: 0;
+     position:absolute;
+     display:block;
+     list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 180px;
+    
+}
+#hormenu .submenu li a{
+  display:block;
+   width: 180px;
+   text-align: left;
+     transform: translateX(0px);
+    transition: 0.2s;
+}
+#hormenu .submenu li a:hover {
+   border-top: 4px;
+    transform: translateX(5px);
+}
+
+#hormenu .rightalign > li:hover > ul{
+  display: block;
+ background-color:  #4d4d4d;
+ 
+  max-height: 200px;
+   transition: all 0.5s ease-out;
+}
+
+</style>
+</head>
+
+	
+   
+	<body ng-app="app" background="images/image1.jpg">
+   
+   <nav  class="navbar-fixed-top"  id="hormenu">
+     <ul>
+       <li><a id="brand" href="#home">ShopOnline.com</a></li>
+         <li><a href='#gridview'><span class="glyphicon glyphicon-home"></span></a></li>
+          <li  ng-show="admin"><a href='#addproducts'>Add products</a></li>
+       <li ng-show="admin"><a href='#'>Order History</a></li>
+       
+
+       <div class="rightalign">
+      <li ng-show="user" ><a href='#viewcustomer'>hii!! {{response.name}} <span class="glyphicon glyphicon-menu-down" ></span> </a>
+         <ul class="submenu">
+         <li><a href='#viewcustomer'>View my Profile</a></li>
+         <li><a href='#editcustomer'>Edit my Profile</a></li>
+         <li><a href='#order'>My Orders</a></li>
+         <li ng-show="user"><a href='' ng-click="logOut()">Logout</a></li>
+         
+         </ul></li>
+      <li ng-show="user"><a href='#cart'><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+     <li ng-hide="authenticated">
+     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Sign In</button>
+     
+   <a href='#login'>Sign In</a>
+    </li>
+     <li ng-hide="authenticated"><a  href='#newcustomer'>New User? Sign Up</a></li>
+     <li ng-show="admin"><a href='' ng-click="logOut()">Logout</a></li>
+   <li><a href='#'>Contact Us</a></li>
+</div>
+		</ul>
+     
+     </nav>
+	data-toggle="modal" data-target="#myModal"
+	<div id="vermenu">
+  
+	<ul class="mainmenu">
+      <li id="header">Shop by Catogory</li>
+      
+   <li ng-repeat="category in categories"><a href='#'><span class="glyphicon glyphicon-chevron-right" ></span>  {{category.categoryName}}</a></li>
+   <li><a href="#e1" ng-click="showBoxOne = !showBoxOne"><span class="glyphicon glyphicon-chevron-right" ></span> Products</a>
+   
+   <div class="submenu">
+      <ul class=' animate-show'  ng-show="showBoxOne" >
+         <li >
+           <a href='#'></a></li>
+          <li class="animate-show"><a href='#'>Product2</a></li>
+       <li><a href='#'>Product2</a></li>
+		</ul>
+         </div>
+     
+   </li>
+   <li class='active has-sub'><a href='#' ng-click="showme=!showme">Products</a>
+      <ul class="anim" ng-show="showme">
+         <li class='has-sub'><a href='#'>Product 1</a></li>
+          
+         <li class='has-sub'><a href='#'>Product 2</a></li>
+      </ul>
+   </li>
+   <li><a href='#'>About</a></li>
+   <li><a href='#'>Contact</a></li>
+</ul>
+</div>
+
+ 
+<div class="col-md-8">
+<div class="container">
+ 
+<div class="row" style="padding-top:100px">
+<div class="col-md-8 col-md-offset-3">
+ 
+<div ng-view>
+  </div>
+  
+  </div>
+  </div>
+	</body>
+	<script>
+
+
+	</script>
+</html>
+>>>>>>> refs/remotes/origin/master
+ -->

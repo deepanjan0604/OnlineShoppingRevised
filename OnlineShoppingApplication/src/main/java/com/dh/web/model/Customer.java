@@ -72,6 +72,7 @@ public class Customer {
 	Cart cart;
 
 	@OneToMany(mappedBy = "customer", orphanRemoval = true)
+	
 	List<Order> order;
 	
 	
